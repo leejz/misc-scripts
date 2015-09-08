@@ -3,8 +3,8 @@ Scripts for bioinformatics processing of microbial genomic and metagenomic seque
 
 Version 0.0 Not ready for prime time. Check back later.
 
-The MIT License (MIT) 
-https://opensource.org/licenses/MIT
-Copyright (c) 2015 Jackson Lee
-
+The MIT License (MIT) <br>
+https://opensource.org/licenses/MIT<br>
+Copyright (c) 2015 Jackson Lee<br>
+<br>
 github: leejz

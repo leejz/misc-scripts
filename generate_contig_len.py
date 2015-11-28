@@ -1,22 +1,22 @@
 #!/usr/bin/env python
-"""---------------------------------------------------------------------------------------
-generate_contig_len.py
-Jackson Lee 11/26/14
+"""
+--------------------------------------------------------------------------------
+Created:  Jackson Lee 11/26/14
+
 This script reads in an fasta and outputs a tab delimited length file   
-   
-   usage:
-   generate_contig_len.py -i sequence.fasta -o contig.lengths.txt
-   
 
 
----------------------------------------------------------------------------------------"""
+--------------------------------------------------------------------------------   
+usage:   generate_contig_len.py -i sequence.fasta -o contig.lengths.txt
+"""
+
+#-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
 from string import strip
 from Bio import SeqIO
-from optparse import OptionParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
-#---------------------------------------------------------------------------------------
-
+#-------------------------------------------------------------------------------
 #function declarations
 
 def process_and_generate(input_iterator, threshold, greaterflag):
@@ -34,18 +34,22 @@ def process_and_generate(input_iterator, threshold, greaterflag):
             if len(rec.seq) < threshold:
                 yield rec
 
-#---------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 #Body
 print "Running..."
 
 if __name__ == '__main__':
-    parser = OptionParser(usage = "usage:    generate_contig_len.py -i sequence.fasta -o contig.lengths.txt",                  
-    description=' 11/26/14 This script reads in an fasta and outputs a tab delimited length file')
-    parser.add_option("-i", "--input_fastq", action="store", type="string", dest="inputfilename",
-                  help="fastq file of input sequences")
-    parser.add_option("-o", "--output_file", action="store", type="string", dest="outputfilename",
-                  help="tab-delimited length text file")
-    (options, args) = parser.parse_args()
+    parser = ArgumentParser(usage = "generate_contig_len.py -i sequence.fasta -o \
+contig.lengths.txt",
+                            description=__doc__, 
+                            formatter_class=RawDescriptionHelpFormatter)
+    parser.add_argument("-i", "--input_fastq", action="store",
+                        dest="inputfilename",
+                        help="fastq file of input sequences")
+    parser.add_argument("-o", "--output_file", action="store", 
+                        dest="outputfilename",
+                        help="tab-delimited length text file")
+    options = parser.parse_args()
 
     mandatories = ["inputfilename", "outputfilename"]
     for m in mandatories:

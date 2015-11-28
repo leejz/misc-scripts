@@ -1,68 +1,70 @@
 #!/usr/bin/env python
-"""---------------------------------------------------------------------------------------"""
-"""Jackson Lee 8/27/12"""
-"""Read in phyloxml file or a tog newick tree file and a fasta file and match top 10 
-    characters of header with xml.  Then add in the appropriate genome name
-    
-    input file:
-    fasta file 
-    
-    >gi|41178954|ref|NP_957541.1| putative mobilization protein A [Moraxella catarrhalis]
-    MASFERTLMAGLNQDRYNILWVEHTDKDRLELNFLIPKVDLGTGKAMNPYFDKTDRGLVDVWKQVINYDYGLHDPDDPKN
-    RQTLVTVKDLPKSKQEFKQALTAVLEQKILADEIKDHADIIKELENMGLEIARTTPTAISIKDPDGGRNIRLKGEIYEQT
-    FTANQATERESQRASESYRNELEQRISRVRDELTSRIEAKSAFNATRYKTIPSREQSPNEQAHGIQDPSRGSNGDFVINP
-    DSIRGVQSVLGQENSHTARAIRRYTTGDRQQPPTSQSTNESTGNGTGRQDLHRQQDEQSQNMAKQRQTTNHGATLNVKAI
-    PERVRAIATRARTLLVIARDGKSDAQATDRAITATNSGLRDRKQQANDRKQRTVEIIGVAKNAGAGIDQHHAEQVRLQQQ
-    QARQARQQTKDEPKKLGLDR
-   
-    xml file:
-    <?xml version="1.0" encoding="UTF-8"?>
-    ...
-    <clade><name>307718067|</name><branch_length>0.291147</branch_length><color>
-    <red>255</red><green>90</green><blue>90</blue></color></clade></clade>
-    ...
-    
-    newick tree file:
-    (333980686|:0.0841434,((((317133238|:0.208684,((20090069|r:1.25081e-06,20090077|r:1.25081e-06):0.0181263,73669771|
-    r:0.135455):0.126873):0.0860154,153954373|:0.224343):0.051196,(((313203840|:0.211795,193215533|:0.172569):0.0712309,
-    (345860857|:0.158235,(392959144|:0.0539456,(325290943|:0.0749888,359413714|:0.0651864):0.0201283):0.0342632):0.0100293):
-    0.0420961,((374812684|:0.126264,379010572|:0.0514746):0.0344013,(((225164851|:0.0179084,((373853634|:1.25081e-06,390119243
-    |:1.25081e-06):1.25081e-06
-    
-    output file:
-    filename: inputfile.taxadded.xml
-    
-    same xml, but with gi and genome added in
-    
-    
-   
-    usage:
-    python add_tax_to_leaves.py -i input.fasta -x phylo.xml -n
+"""
+--------------------------------------------------------------------------------
+Created:  Jackson Lee 8/27/12
 
-    """
-"""---------------------------------------------------------------------------------------"""
-"""Header - Linkers, Libs, Constants"""
+Read in phyloxml file or a tog newick tree file and a fasta file and match top 10 
+characters of header with xml.  Then add in the appropriate genome name
+    
+input file:
+fasta file 
+    
+>gi|41178954|ref|NP_957541.1| putative mobilization protein A [Moraxella catarrhalis]
+MASFERTLMAGLNQDRYNILWVEHTDKDRLELNFLIPKVDLGTGKAMNPYFDKTDRGLVDVWKQVINYDYGLHDPDDPKN
+RQTLVTVKDLPKSKQEFKQALTAVLEQKILADEIKDHADIIKELENMGLEIARTTPTAISIKDPDGGRNIRLKGEIYEQT
+FTANQATERESQRASESYRNELEQRISRVRDELTSRIEAKSAFNATRYKTIPSREQSPNEQAHGIQDPSRGSNGDFVINP
+DSIRGVQSVLGQENSHTARAIRRYTTGDRQQPPTSQSTNESTGNGTGRQDLHRQQDEQSQNMAKQRQTTNHGATLNVKAI
+PERVRAIATRARTLLVIARDGKSDAQATDRAITATNSGLRDRKQQANDRKQRTVEIIGVAKNAGAGIDQHHAEQVRLQQQ
+QARQARQQTKDEPKKLGLDR
+   
+xml file:
+<?xml version="1.0" encoding="UTF-8"?>
+...
+<clade><name>307718067|</name><branch_length>0.291147</branch_length><color>
+<red>255</red><green>90</green><blue>90</blue></color></clade></clade>
+...
+    
+newick tree file:
+(333980686|:0.0841434,((((317133238|:0.208684,((20090069|r:1.25081e-06,20090077|r:1.25081e-06):0.0181263,73669771|
+r:0.135455):0.126873):0.0860154,153954373|:0.224343):0.051196,(((313203840|:0.211795,193215533|:0.172569):0.0712309,
+(345860857|:0.158235,(392959144|:0.0539456,(325290943|:0.0749888,359413714|:0.0651864):0.0201283):0.0342632):0.0100293):
+0.0420961,((374812684|:0.126264,379010572|:0.0514746):0.0344013,(((225164851|:0.0179084,((373853634|:1.25081e-06,390119243
+|:1.25081e-06):1.25081e-06
+    
+output file:
+filename: inputfile.taxadded.xml
+    
+same xml, but with gi and genome added in
+    
+--------------------------------------------------------------------------------
+usage:    python add_tax_to_leaves.py -i input.fasta -x phylo.xml -n
+"""
+#-------------------------------------------------------------------------------
+#Header - Linkers, Libs, Constants
 from string import strip
 from re import split
-from optparse import OptionParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
-"""function declarations"""
+#-------------------------------------------------------------------------------
+#function declarations
 
-"""---------------------------------------------------------------------------------------"""
-"""Body"""
+#-------------------------------------------------------------------------------
+#Body
 print "Running..."
 
 
 if __name__ == '__main__':
-    parser = OptionParser(usage = "usage:  python add_tax_to_leaves.py -i input.fasta -x phylo.xml",                  
-    description='8/30/12 JZL add_tax_to_leaves.py.  Read in phyloxml file and a fasta file and match top 10 characters of header with xml.  Then add in the appropriate genome name')
-    parser.add_option("-i", "--input_fasta", action="store", type="string", dest="inputfilename",
-                  help="fasta file of input sequences")
-    parser.add_option("-x", "--xml_file", action="store", type="string", dest="xmlfilename",
-                  help="output fasta file name")  
-    parser.add_option("-n", "--newick_file", action="store_true", dest="NewickFlag", default=False,
-                  help="output fasta file name")                  
-    (options, args) = parser.parse_args()
+    parser = ArgumentParser(usage = "python add_tax_to_leaves.py -i input.fasta -x phylo.xml",
+                            description=__doc__, 
+                            formatter_class=RawDescriptionHelpFormatter)
+    parser.add_argument("-i", "--input_fasta", action="store", 
+                        dest="inputfilename",
+                        help="fasta file of input sequences")
+    parser.add_argument("-x", "--xml_file", action="store", dest="xmlfilename",
+                        help="output fasta file name")  
+    parser.add_argument("-n", "--newick_file", action="store_true", 
+                        dest="NewickFlag", help="set for newick file")                  
+    options = parser.parse_args()
 
     mandatories = ["inputfilename", "xmlfilename"]
     for m in mandatories:

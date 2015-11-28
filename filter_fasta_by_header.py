@@ -1,52 +1,58 @@
 #!/usr/bin/env python
-"""---------------------------------------------------------------------------------------"""
-"""Jackson Lee 12/4/12"""
-"""This script reads in a fasta file and a text file of headers and filters all sequences in the file by exact match.  
-   The script produces a not in file output as well.
+"""
+--------------------------------------------------------------------------------
+Created:  Jackson Lee 12/4/12
+This script reads in a fasta file and a text file of headers and filters all 
+sequences in the file by exact match.  The script produces a not in file output 
+as well.
    
-   Input fasta file format:
-   4098968.combined_unique.fa
+Input fasta file format:
+4098968.combined_unique.fa
    
-   >Sequence0000000001
-   GCGCCCCTACGGGGAACGTTTTACTTCCAGTTTTAAAGCAGCTTTTACCCATCCAAACTCTGCGGTAACTTTATCATAAATTGTGGTAATATCTTCTGAT   
+>Sequence0000000001
+GCGCCCCTACGGGGAACGTTTTACTTCCAGTTTTAAAGCAGCTTTTACCCATCCAAACTCTGCGGTAACTTTATCATAAATTGTGGTAATATCTTCTGAT   
 
-   Input filter file format:
-   >Sequence0000000001
+Input filter file format:
+>Sequence0000000001
    
-   0
-   5
-   10 
-   22
-   etc.
+0
+5
+10 
+22
+etc.
    
-   Output file format:
-   4098968.combined_unique.filtered.fa
-   
-   usage:
-   filter_fasta_by_header.py -i input.fa -f filter.txt -n=flipflag
+Output file format:
+4098968.combined_unique.filtered.fa
+
+--------------------------------------------------------------------------------
+usage:   filter_fasta_by_header.py -i input.fa -f filter.txt -n flipflag
 """
 
-"""---------------------------------------------------------------------------------------"""
-"""Header - Linkers, Libs, Constants"""
+#-------------------------------------------------------------------------------
+#Header - Linkers, Libs, Constants
 from string import strip
-from optparse import OptionParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
-"""function declarations"""
+#-------------------------------------------------------------------------------
+#function declarations
 
-"""---------------------------------------------------------------------------------------"""
-"""Body"""
+#-------------------------------------------------------------------------------
+#Body
 print "Running..."
 
 if __name__ == '__main__':
-    parser = OptionParser(usage = "usage:    filter_fasta_by_header.py -i input.fa -f filter.txt -n flipflag",                  
-    description='2/25/13 JZL filter_fasta_by_header.py.  reads in fasta and text file of headers and filters all sequences in the file by exact match.  ')
-    parser.add_option("-i", "--input_fasta", action="store", type="string", dest="inputfilename",
-                  help="fasta file of input sequences")
-    parser.add_option("-f", "--filter_text", action="store", type="string", dest="filterfilename",
-                  help="filter header file")
-    parser.add_option("-n", "--flipflag", action="store_true", dest="flipflag", default=False,
-                  help="use to include rather than exclude filter sequences")
-    (options, args) = parser.parse_args()
+    parser = ArgumentParser(usage = "filter_fasta_by_header.py -i input.fa -f \
+filter.txt -n flipflag",
+                            description=__doc__, 
+                            formatter_class=RawDescriptionHelpFormatter)
+    parser.add_argument("-i", "--input_fasta", action="store", 
+                        dest="inputfilename",
+                        help="fasta file of input sequences")
+    parser.add_argument("-f", "--filter_text", action="store", 
+                        dest="filterfilename", help="filter header file")
+    parser.add_argument("-n", "--flipflag", action="store_true", dest="flipflag",
+                        help="use to include rather than exclude filter sequences")
+    options = parser.parse_args()
 
     mandatories = ["inputfilename", "filterfilename"]
     for m in mandatories:

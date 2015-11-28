@@ -1,12 +1,11 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 """
-11/21/11 JZL phylogeny_listing.py
+--------------------------------------------------------------------------------
+Created:   Jackson Lee 11/21/11
 
-This script reads a tab list file containing OTU taxonomy information, and a tab list file containing
-OTU information and then outputs a tab list file with each sequence and taxonomy 
-   
-usage:
-python phylogeny_listing.py -t OTU_tax.txt -u picked_otu.txt -o outfile.txt
+This script reads a tab list file containing OTU taxonomy information, and a 
+tab list file containing OTU information and then outputs a tab list file with 
+each sequence and taxonomy 
    
 OTU csv tab file format:
 a tab-delimited file with each sequence and a semi-colon delimited string
@@ -35,9 +34,11 @@ NBB55_24        Bacteria;Firmicutes_Clostridia_1;Clostridiales;Ruminococcaceae;A
 NBB67_21        Bacteria;Firmicutes_Clostridia_1;Clostridiales;Ruminococcaceae;Anaerotruncus;
 etc
 
+--------------------------------------------------------------------------------
+usage:
+python phylogeny_listing.py -t OTU_tax.txt -u picked_otu.txt -o outfile.txt
 """
-
-"""------------------------------------------------------------------------------------------"""
+#-------------------------------------------------------------------------------
 """Functions & Declarations"""
 
 from string import strip
@@ -45,22 +46,28 @@ from numpy import *
 import csv
 import os as os
 import random as random
-from optparse import OptionParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
-"""------------------------------------------------------------------------------------------"""
-# Load files
+#-------------------------------------------------------------------------------
+#Body
 print "Running..."
 
 if __name__ == '__main__':
-    parser = OptionParser(usage = "usage: phylogeny_listing.py -t OTU_tax.txt -u picked_otu.txt -o outfile.txt",
-                  description='11/22/11 JZL phylogeny_listing.py')
-    parser.add_option("-t", "--taxonomy_list", action="store", type="string", dest="taxfilename",
-                  help="input tab delimited taxonomy file (see docstring)")
-    parser.add_option("-u", "--OTU_list", action="store", type="string", dest="otufilename", 
-                  help="input tab delimited OTU file (see docstring)")
-    parser.add_option("-o", "--output_file", action="store", type="string", dest="outfilename", 
-                  help="output tab delimited listing (see docstring)")
-    (options, args) = parser.parse_args()
+
+    parser = ArgumentParser(usage = "phylogeny_listing.py -t OTU_tax.txt -u \
+picked_otu.txt -o outfile.txt",
+                            description=__doc__, 
+                            formatter_class=RawDescriptionHelpFormatter)
+    parser.add_argument("-t", "--taxonomy_list", action="store", 
+                        dest="taxfilename",
+                        help="input tab delimited taxonomy file (see docstring)")
+    parser.add_argument("-u", "--OTU_list", action="store", 
+                        dest="otufilename", 
+                        help="input tab delimited OTU file (see docstring)")
+    parser.add_argument("-o", "--output_file", action="store",
+                        dest="outfilename", 
+                        help="output tab delimited listing (see docstring)")
+    options = parser.parse_args()
 
     mandatories = ["taxfilename", "otufilename","outfilename"]
     for m in mandatories:
@@ -73,36 +80,27 @@ if __name__ == '__main__':
     taxfilename = options.taxfilename
     otufilename = options.otufilename
     outfilename = options.outfilename
-    taxfile = open(taxfilename, 'U')
-    taxreader = csv.reader(taxfile, dialect='excel-tab')
-    otufile = open(otufilename, 'U')
-    otureader = csv.reader(otufile, dialect='excel-tab')
-    
-    otu_list = []
-    for line in otureader:
-        otu_list.append(line[1:])
-    otufile.close()
-    
-    name_tax = []
-    for line in taxreader:
-        name_tax.append([line[0], line[1]])
-    taxfile.close()
+
+    with open(otufilename, 'U') as otufile:
+        otureader = csv.reader(otufile, dialect='excel-tab')    
+        otu_list = [line[1:] for line in otureader]
+
+    with open(taxfilename, 'U') as taxfile:
+        taxreader = csv.reader(taxfile, dialect='excel-tab')    
+        name_tax = [[line[0], line[1]] for line in taxreader]
+
     #for each taxonomy, find the otu and write each sequence taxonomy line
     
     #open write file
-    outfile = open(outfilename, 'wb')
-    writer=csv.writer(outfile, dialect='excel-tab')
-    
-    #search and write
-    for name_tax_entry in name_tax:
-        print name_tax_entry
-        for otu in otu_list:
-            if name_tax_entry[0] in otu:
-                for otu_member in otu:
-                    writer.writerow([otu_member, name_tax_entry[1]])
+    with open(outfilename, 'wb') as outfile:
+        writer=csv.writer(outfile, dialect='excel-tab')    
+        #search and write
+        for name_tax_entry in name_tax:
+            print name_tax_entry
+            for otu in otu_list:
+                if name_tax_entry[0] in otu:
+                    for otu_member in otu:
+                        writer.writerow([otu_member, name_tax_entry[1]])
+        print 'Output file '+outfilename+' written.'
 
-    outfile.close()
-    print 'Output file '+outfilename+' written.'
-
-    
 print "Done!"

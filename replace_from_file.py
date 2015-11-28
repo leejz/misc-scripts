@@ -1,44 +1,51 @@
 #!/usr/bin/env python
-"""---------------------------------------------------------------------------------------"""
-"""Jackson Lee 1/28/14"""
-"""This script reads in a file and a tab delimited text file of [match]/t[replace] and
-   replaces all instances and reports back result and file.
+"""
+--------------------------------------------------------------------------------
+Created:   Jackson Lee 1/28/14
+
+This script reads in a file and a tab delimited text file of [match]/t[replace] and
+replaces all instances and reports back result and file.
    
-   Input fasta file format:
-   any fasta file
+Input fasta file format:
+any fasta file
    
-   Input filter file format:
-   >Sequence0000000001    Seq1replaced
+Input filter file format:
+>Sequence0000000001    Seq1replaced
    
-   Output
-   fasta file with header replaced
-   a not found file with enteries not found written as 'outfile.notfound.*'
+Output
+fasta file with header replaced
+a not found file with enteries not found written as 'outfile.notfound.*'
    
-   usage:
-   replace_from_file.py -i in.file -f filter.txt -o out.file
+--------------------------------------------------------------------------------   
+usage:   replace_from_file.py -i in.file -f filter.txt -o out.file
 """
 
-"""---------------------------------------------------------------------------------------"""
-"""Header - Linkers, Libs, Constants"""
+#-------------------------------------------------------------------------------
+#Header - Linkers, Libs, Constants
 from string import strip
-from optparse import OptionParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
-"""function declarations"""
+#-------------------------------------------------------------------------------
+#function declarations
 
-"""---------------------------------------------------------------------------------------"""
-"""Body"""
+#-------------------------------------------------------------------------------
+#Body
 print "Running..."
 
 if __name__ == '__main__':
-    parser = OptionParser(usage = "usage:    replace_from_file.py -i in.file -f filter.txt -o out.file",                  
-    description='7/16/13 replace_from_file.py This script reads in a file and a tab delimited text file of [match]/t[replace] and replaces all instances and reports back result and file.')
-    parser.add_option("-i", "--input_file", action="store", type="string", dest="inputfilename",
-                  help="text input file")
-    parser.add_option("-f", "--filter_text", action="store", type="string", dest="filterfilename",
-                  help="filter header file")
-    parser.add_option("-o", "--output_file", action="store", type="string", dest="outputfilename",
-                  help="text output file")
-    (options, args) = parser.parse_args()
+    parser = ArgumentParser(usage = "replace_from_file.py -i in.file -f filter.txt -o out.file",
+                            description=__doc__, 
+                            formatter_class=RawDescriptionHelpFormatter)
+    parser.add_argument("-i", "--input_file", action="store", 
+                        dest="inputfilename",
+                        help="text input file")
+    parser.add_argument("-f", "--filter_text", action="store", 
+                        dest="filterfilename",
+                        help="filter header file")
+    parser.add_argument("-o", "--output_file", action="store", 
+                        dest="outputfilename",
+                        help="text output file")
+    options = parser.parse_args()
 
     mandatories = ["inputfilename", "filterfilename", "outputfilename"]
     for m in mandatories:
@@ -54,39 +61,31 @@ if __name__ == '__main__':
     notfoundfilename = outputfilenameprefix + '.notfound.txt'
     
     #read in filter file
-    filterfile = open(filterfilename, 'U')
-   
-    filterfile_text =[]
-    for line in filterfile:
-        query, replace = line.strip().split('\t')
-        filterfile_text.append([query, replace])
-    filterfile.close()
+    with open(filterfilename, 'U') as filterfile:
+        filterfile_text =[]
+        for line in filterfile:
+            query, replace = line.strip().split('\t')
+            filterfile_text.append([query, replace])
     
-    infile = open(inputfilename,'U')    
-    outfile = open(outputfilename, 'w')
-    notfoundfile = open(notfoundfilename, 'w')
-
-    print "Replacing...."        
-    for line in infile:
-        new_file_text = []
-        #only search if header
-        #if line[0] == '>':
-        notfoundflag = True
-        for i, [query, replace] in enumerate(filterfile_text):    
-            if query in line:
-                new_file_text = line.replace(query, replace)
-                notfoundflag = False
-                #assuming only 1 match remove from search
-                #filterfile_text.pop(i)          
-                break      
-        if notfoundflag:
-            notfoundfile.write(line)  
-            new_file_text = line    
-        #else:
-        #    new_file_text = line
-	outfile.write(new_file_text)
-    infile.close()
-    outfile.close()
-    notfoundfile.close()
+    with open(inputfilename,'U') as infile, open(outputfilename, 'w') as outfile, open(notfoundfilename, 'w') as notfoundfile:
+        print "Replacing...."        
+        for line in infile:
+            new_file_text = ''
+            #only search if header
+            #if line[0] == '>':
+            notfoundflag = True
+            for [query, replace] in filterfile_text:    
+                if query in line:
+                    new_file_text = line.replace(query, replace)
+                    notfoundflag = False
+                    #assuming only 1 match remove from search
+                    #filterfile_text.pop(i)          
+                    break      
+            if notfoundflag:
+                notfoundfile.write(line)  
+                new_file_text = line    
+            #else:
+            #    new_file_text = line
+            outfile.write(new_file_text)
 
     print "Done!"

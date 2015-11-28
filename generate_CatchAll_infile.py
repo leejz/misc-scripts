@@ -1,44 +1,50 @@
-#!/usr/bin/python
-"""4/13/12 JZL
-   This script reads a tab-delimited file containing abundance data and returns the correct formatted
-   histogram files for each sample to run by CatchAll CatchAllCmdL.exe.
-   
-   usage:
-   python generate_CatchAll_infile.py -i input_directory -o output_dir
-   
-   abundance otu table file format:
-   a csv file with each environment in vertical columns, with the name of the environment first
-   #rarefaction_750_4.txt
-   #OTU ID	Ob.1	Ob.62Z
-   103	0	0
-   41	0	0
-   30	0	0
-   10	0	0
-   9	0	0
-   etc
-   
-   outfile format:
-   a comma delimited file for each sample, where the first term is the frequency of counts, the 
-   second is the number of OTUs at that count, sorted in the order of increasing counts
-   CatchAll.Total.txt
-   1,90
-   2,12
-   3,14
-   4,1
-   ...
-   103,1
-   etc
-   
-   CatchAll.Ob.1.txt
-   ...
-   
-   The script generates a shell file 'CatchAll.sh' to run each sample as well
-
+#!/usr/bin/env python
 """
-"""------------------------------------------------------------------------------------------"""
-"""Functions & Declarations"""
+--------------------------------------------------------------------------------
+Created:   Jackson Lee 4/13/12
 
-"""------------------------------------------------------------------------------------------"""
+This script reads a tab-delimited file containing abundance data and returns the 
+correct formatted histogram files for each sample to run by CatchAll 
+CatchAllCmdL.exe.
+   
+abundance otu table file format:
+a csv file with each environment in vertical columns, with the name of the 
+environment first
+
+#rarefaction_750_4.txt
+#OTU ID	Ob.1	Ob.62Z
+103	0	0
+41	0	0
+30	0	0
+10	0	0
+9	0	0
+etc...
+   
+outfile format:
+a comma delimited file for each sample, where the first term is the frequency 
+of counts, the second is the number of OTUs at that count, sorted in the order of 
+increasing counts CatchAll.Total.txt
+
+1,90
+2,12
+3,14
+4,1
+...
+103,1
+etc...
+   
+CatchAll.Ob.1.txt
+...
+   
+The script generates a shell file 'CatchAll.sh' to run each sample as well
+
+--------------------------------------------------------------------------------
+usage:   python generate_CatchAll_infile.py -i input_directory -o output_dir
+"""
+
+#-------------------------------------------------------------------------------
+#Functions & Declarations
+
 def generate_catchall_file(input_dir, filename, output_dir):
     """ def generate_catchall_file(input_dir, filename, output_dir):
     input_dir is the input directory full path 
@@ -50,13 +56,12 @@ def generate_catchall_file(input_dir, filename, output_dir):
     This function parses an OTU table for use in Catchall input format
     """
     # read in first line as sample names, then read in all data
-    infile = open(input_dir + '/' + filename, 'U')
-    dummy = infile.next() #remove header
-    samplenames=infile.next().strip().split('\t')[1:] #get sample names
-    data=[]
-    for line in infile:
-        data.append(line)
-    infile.close()
+    with open(input_dir + '/' + filename, 'U') as infile:
+        dummy = infile.next() #remove header
+        samplenames=infile.next().strip().split('\t')[1:] #get sample names
+        data=[]
+        for line in infile:
+            data.append(line)
     
     #transpose all data, and generate output filenames from sample names
     datamatrix=[]
@@ -85,32 +90,34 @@ def generate_catchall_file(input_dir, filename, output_dir):
             #print "zero line pruned in ", outfilename
             sample_out.pop(0)
         output_path = outfilepath + '/' + outfilename
-        outfile=open(output_path,'w')
-        for pair in sample_out:
-            outfile.write(str(pair[0])+','+str(pair[1])+'\n')
-        outfile.close()
+        with open(output_path,'w') as outfile:
+            for pair in sample_out:
+                outfile.write(str(pair[0])+','+str(pair[1])+'\n')
         output_paths.append(output_path)
         print "writing to file: " + output_path + "\n"
     return output_paths
 
-"""------------------------------------------------------------------------------------------"""
-
+#-------------------------------------------------------------------------------
+#Header - linkers, libs, constants
 from string import strip
-from optparse import OptionParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 import os
 
-"""------------------------------------------------------------------------------------------"""
-# Load files
+#-------------------------------------------------------------------------------
+#Body
 print "Running..."
 
 if __name__ == '__main__':
-    parser = OptionParser(usage = "usage: python generate_CatchAll_infile.py -i input_directory",
-                  description='4/13/12 JZL generate_CatchAll_infile.py')
-    parser.add_option("-i", "--input_directory", action="store", type="string", dest="input_dir",
-                  help="input directory of rarefaction files (txt format)")
-    parser.add_option("-o", "--output_directory", action="store", type="string", dest="output_dir",
-                  help="input directory of rarefaction files (txt format)")
-    (options, args) = parser.parse_args()
+    parser = ArgumentParser(usage = "python generate_CatchAll_infile.py -i input_directory",
+                            description=__doc__, 
+                            formatter_class=RawDescriptionHelpFormatter)
+    parser.add_argument("-i", "--input_directory", action="store", 
+                        dest="input_dir",
+                        help="input directory of rarefaction files (txt format)")
+    parser.add_argument("-o", "--output_directory", action="store", 
+                        dest="output_dir",
+                        help="output directory")
+    options = parser.parse_args()
 
     mandatories = ["input_dir", "output_dir"]
     for m in mandatories:
@@ -139,7 +146,8 @@ if __name__ == '__main__':
                 outfilenames = outfilenames + generate_catchall_file(input_dir, filename, output_dir)
     
     print "Writing output shell script. \n"
-    shscript=open('CatchAll.sh','w')
-    for outfilename in outfilenames:
-        shscript.write('mono CatchAllCmdL.exe '+outfilename+' '+outfilename.split('.txt')[0]+'\n')
+    with open('CatchAll.sh','w') as shscript:
+        for outfilename in outfilenames:
+            shscript.write('mono CatchAllCmdL.exe '+outfilename+' '+outfilename.split('.txt')[0]+'\n')
+            
 print "Done!"

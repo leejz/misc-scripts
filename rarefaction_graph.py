@@ -1,23 +1,28 @@
-#!/usr/bin/python
-"""This script plots the rarefaction curve with error bars as shaded colors. No files associated"""
+#!/usr/bin/env python
+"""
+--------------------------------------------------------------------------------
+Created: Jackson Lee 2012
 
-"""------------------------------------------------------------------------------------------"""
+This script plots the rarefaction curve with error bars as shaded colors. 
+No files associated
 
-"""Modules and Libraries"""
+"""
+#-------------------------------------------------------------------------------
+#Modules and Libraries
 #from pylab import *
 import matplotlib.pyplot as plt
 import numpy as np
 import operator
 import csv
 
-"""------------------------------------------------------------------------------------------"""
-"""Function and Class Definitions"""
+#-------------------------------------------------------------------------------
+#Function and Class Definitions
 
 def plot_data(ax,xaxis, datalist, color, al, linelist):
-"""ax is the figure axis, xaxis is the list of x points (all the same), y is the list of list of y points, /
-color is the color scheme set in the main body, al is the alpha opacity,/
-linelist is the list of the order of lines to be used in the shaded figure counted in the order in which they are entered./
-so [0,2,3] will draw shaded regions for lines 1 and 3, 3 and 4, and ignore line 1, but all lines are drawn too."""
+    """ax is the figure axis, xaxis is the list of x points (all the same), y is the list of list of y points,
+    color is the color scheme set in the main body, al is the alpha opacity,
+    linelist is the list of the order of lines to be used in the shaded figure counted in the order in which they are entered.
+    so [0,2,3] will draw shaded regions for lines 1 and 3, 3 and 4, and ignore line 1, but all lines are drawn too."""
 
     for i in range(len(linelist)-1):
         botline=linelist[i]
@@ -28,8 +33,8 @@ so [0,2,3] will draw shaded regions for lines 1 and 3, 3 and 4, and ignore line 
         ax.plot(xaxis[:len(plotlist)],plotlist,color,linewidth=1.5)
 
 
-"""------------------------------------------------------------------------------------------"""
-"""Body Section"""
+#-------------------------------------------------------------------------------
+#Body
 print "Running..."
 
 #raw data

@@ -1,53 +1,53 @@
 #!/usr/bin/env python
-"""---------------------------------------------------------------------------------------"""
-"""Jackson Lee 8/27/12"""
-"""Read in a text file of gi names and then pull those fasta sequences out of a fasta file.
-    This script will also output a not in list file.
+"""
+--------------------------------------------------------------------------------
+Created:   Jackson Lee 8/27/12
+Read in a text file of gi names and then pull those fasta sequences out of a 
+fasta file. This script will also output a not in list file.
    
-    input file:
-    gi list:
-    a text file with one gi number on each line
+input file:
+gi list:
+a text file with one gi number on each line
     
-    fasta file 
-    
-    >gi|41178954|ref|NP_957541.1| putative mobilization protein A [Moraxella catarrhalis]
-    MASFERTLMAGLNQDRYNILWVEHTDKDRLELNFLIPKVDLGTGKAMNPYFDKTDRGLVDVWKQVINYDYGLHDPDDPKN
-    RQTLVTVKDLPKSKQEFKQALTAVLEQKILADEIKDHADIIKELENMGLEIARTTPTAISIKDPDGGRNIRLKGEIYEQT
-    FTANQATERESQRASESYRNELEQRISRVRDELTSRIEAKSAFNATRYKTIPSREQSPNEQAHGIQDPSRGSNGDFVINP
-    DSIRGVQSVLGQENSHTARAIRRYTTGDRQQPPTSQSTNESTGNGTGRQDLHRQQDEQSQNMAKQRQTTNHGATLNVKAI
-    PERVRAIATRARTLLVIARDGKSDAQATDRAITATNSGLRDRKQQANDRKQRTVEIIGVAKNAGAGIDQHHAEQVRLQQQ
-    QARQARQQTKDEPKKLGLDR
-   
-    output file:
-    same, but with only the selected files
-   
-    usage:
-    python extract_fasta_with_gi.py -i input.fasta -g input.list.txt -o output.fasta
+fasta file     
+>gi|41178954|ref|NP_957541.1| putative mobilization protein A [Moraxella catarrhalis]
+MASFERTLMAGLNQDRYNILWVEHTDKDRLELNFLIPKVDLGTGKAMNPYFDKTDRGLVDVWKQVINYDYGLHDPDDPKN
+RQTLVTVKDLPKSKQEFKQALTAVLEQKILADEIKDHADIIKELENMGLEIARTTPTAISIKDPDGGRNIRLKGEIYEQT
 
-    """
-"""---------------------------------------------------------------------------------------"""
-"""Header - Linkers, Libs, Constants"""
+output file:
+same, but with only the selected files
+
+--------------------------------------------------------------------------------   
+usage:    python extract_fasta_with_gi.py -i input.fasta -g input.list.txt -o output.fasta
+"""
+#-------------------------------------------------------------------------------
+#Header - Linkers, Libs, Constants
 from string import strip
 from re import split
-from optparse import OptionParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
-"""function declarations"""
+#-------------------------------------------------------------------------------
+#function declarations
 
-"""---------------------------------------------------------------------------------------"""
-"""Body"""
+#-------------------------------------------------------------------------------
+#Body
 print "Running..."
 
 
 if __name__ == '__main__':
-    parser = OptionParser(usage = "usage:   python extract_fasta_with_gi.py -i input.fasta -g input.list.txt -o output.fasta",                  
-    description='8/27/12 JZL extract_fasta_with_gi.py.  Read in a text file of gi names and then pull those fasta sequences out of a fasta file')
-    parser.add_option("-i", "--input_fasta", action="store", type="string", dest="inputfilename",
-                  help="fasta file of input sequences")
-    parser.add_option("-o", "--outfile_filter", action="store", type="string", dest="outfilename",
-                  help="output fasta file name")    
-    parser.add_option("-g", "--gi_list", action="store", type="string", dest="gi_list",
-                  help="text file of list")   
-    (options, args) = parser.parse_args()
+    parser = ArgumentParser(usage = "python extract_fasta_with_gi.py -i \
+input.fasta -g input.list.txt -o output.fasta",
+                            description=__doc__, 
+                            formatter_class=RawDescriptionHelpFormatter)
+    parser.add_argument("-i", "--input_fasta", action="store", 
+                        dest="inputfilename",
+                        help="fasta file of input sequences")
+    parser.add_argument("-o", "--outfile_filter", action="store", 
+                        dest="outfilename",
+                        help="output fasta file name")    
+    parser.add_argument("-g", "--gi_list", action="store", dest="gi_list",
+                        help="text file of list")   
+    options = parser.parse_args()
 
     mandatories = ["inputfilename", "outfilename", "gi_list"]
     for m in mandatories:

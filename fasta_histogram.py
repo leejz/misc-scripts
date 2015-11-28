@@ -1,45 +1,50 @@
 #!/usr/bin/env python
-"""---------------------------------------------------------------------------------------"""
-"""Jackson Lee 11/8/13 ver 092015"""
-"""This script reads in a fasta file and outputs a histogram file of sequence counts.
+"""
+--------------------------------------------------------------------------------
+Created:   Jackson Lee 11/8/13
+Modified:  9/2015
+This script reads in a fasta file and outputs a histogram file of sequence 
+counts.
    
-   Input fasta file format:
-   any fastai or fastq file
+Input fasta file format:
+any fasta or fastq file
    
-   Output file format:
-   bin    count
-   0      0
-   100    2
-   etc.
-   
-   usage:
-   fasta_histogram.py -i in.file -b bin size -o out.file
+Output file format:
+bin    count
+0      0
+100    2
+etc.
+
+--------------------------------------------------------------------------------
+usage:   fasta_histogram.py -i in.file -b bin size -o out.file
 """
 
-"""---------------------------------------------------------------------------------------"""
-"""Header - Linkers, Libs, Constants"""
+#-------------------------------------------------------------------------------
+#Header - Linkers, Libs, Constants
 from string import strip
-from optparse import OptionParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 from Bio import SeqIO
 import numpy as np
 import pylab as P
 
-"""function declarations"""
+#-------------------------------------------------------------------------------
+#function declarations
 
-"""---------------------------------------------------------------------------------------"""
-"""Body"""
+#-------------------------------------------------------------------------------
+#Body
 print "Running..."
 
 if __name__ == '__main__':
-    parser = OptionParser(usage = "usage:   fasta_histogram.py -i in.file -b bin size -o out.file. now with FASTQ",                  
-    description='11/8/13 fasta_histogram.py -i in.file -b bin size -o out.file')
-    parser.add_option("-i", "--input_file", action="store", type="string", dest="inputfilename",
-                  help="fasta input file")
-    parser.add_option("-b", "--bin_size", action="store", type="int", dest="binsize",
-                  help="bin size")
-    parser.add_option("-o", "--output_file", action="store", type="string", dest="outputfilename",
-                  help="text output file")
-    (options, args) = parser.parse_args()
+    parser = ArgumentParser(usage = "fasta_histogram.py -i in.file -b bin size -o out.file. now with FASTQ",
+                            description=__doc__, 
+                            formatter_class=RawDescriptionHelpFormatter)
+    parser.add_argument("-i", "--input_file", action="store", 
+                        dest="inputfilename", help="fasta input file")
+    parser.add_argument("-b", "--bin_size", action="store", type=int, 
+                        dest="binsize", help="bin size")
+    parser.add_argument("-o", "--output_file", action="store", 
+                        dest="outputfilename", help="text output file")
+    options = parser.parse_args()
 
     mandatories = ["inputfilename", "binsize", "outputfilename"]
     for m in mandatories:
@@ -63,7 +68,7 @@ if __name__ == '__main__':
         filetype = 'fasta'
     elif inputfilename.split('.')[-1] in fastq:
         filetype = 'fastq'
-    else 
+    else: 
         print "Unknown file type: " + inputfilename.split('.')[-1] + ". Allowed: " + str(fastq + fasta) 
         parser.print_help()
         exit(-1)

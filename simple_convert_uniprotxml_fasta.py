@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-"""---------------------------------------------------------------------------------------"""
-"""Jackson Lee 6/22/15"""
-"""This script reads in the older uniprot xml file and converts it to a fasta AA file
+"""
+--------------------------------------------------------------------------------
+Created: Jackson Lee 6/22/15
+This script reads in the older uniprot xml file and converts it to a fasta AA file
    
    Input uniprot xml file format:
 <?xml version="1.0" encoding="ISO-8859-1" ?>
@@ -44,30 +45,35 @@ EKGLIVGHFSGIKYKGEKAQASEVDVNKMCCWVSKFKDAMRRYQGIQTCKIPGKVLSDLD
 AKIKAYNLTVEGVEGFVRYSRVTKQHVAAFLKELRHSKQYENVNLIHYILTDKRVDIQHL
 EKDLVKDFKALVESAHRMRQGHMINVKYILYQLLKKHGHGPDGPDILTVKTGSKGVLYDD
 SFRKIYTDLGWKFTPL
-   
-   usage:
-   simple_convert_uniprotxml_fasta.py -i uniprot.xml  -o out.fasta.file
+
+--------------------------------------------------------------------------------   
+usage:   simple_convert_uniprotxml_fasta.py -i uniprot.xml  -o out.fasta.file
 """
 
-#---------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------   
 #Header - Linkers, Libs, Constants
 from string import strip
-from optparse import OptionParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
+#-------------------------------------------------------------------------------
 #function declarations
 
-#---------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 #Body
 print "Running..."
 
 if __name__ == '__main__':
-    parser = OptionParser(usage = "usage:    simple_convert_uniprotxml_fasta.py -i uniprot.xml  -o out.fasta.file",                  
-    description='6/22/15 simple_convert_uniprotxml_fasta.py This script reads in the older uniprot xml file and converts it to a fasta AA file')
-    parser.add_option("-i", "--input_file", action="store", type="string", dest="inputfilename",
-                  help="xml input file (See DocString for format)")
-    parser.add_option("-o", "--output_file", action="store", type="string", dest="outputfilename",
-                  help="fasta output file")
-    (options, args) = parser.parse_args()
+    parser = ArgumentParser(usage = "simple_convert_uniprotxml_fasta.py -i \
+uniprot.xml  -o out.fasta.file",
+                            description=__doc__, 
+                            formatter_class=RawDescriptionHelpFormatter)
+    parser.add_argument("-i", "--input_file", action="store", 
+                        dest="inputfilename",
+                        help="xml input file (See DocString for format)")
+    parser.add_argument("-o", "--output_file", action="store", 
+                        dest="outputfilename",
+                        help="fasta output file")
+    options = parser.parse_args()
 
     mandatories = ["inputfilename", "outputfilename"]
     for m in mandatories:

@@ -1,30 +1,33 @@
 #!/usr/bin/env python
-"""---------------------------------------------------------------------------------------
-Jackson Lee 1/28/14
-This script reads in a fasta file and a tab delimited text file of annotations and
-   replaces the header line with matched annotations
-   
-   Input fasta file format:
-   any fasta file
-   
-   Input annotations file format:
-   tab delimited headings of annotation names (1 word), with search string first column
-   followed by tab delimited annotation data
-   
-   Output
-   fasta file with header replaced
-   a not found file with enteries not found written as 'outfile.notfound.*'
-   
-   usage:
-   add_annotations_to_fasta.py -i in.fasta -a annotations.txt -o out.file
+"""
+--------------------------------------------------------------------------------
+Created: Jackson Lee 1/28/14
 
+This script reads in a fasta file and a tab delimited text file of annotations 
+and replaces the header line with matched annotations
+   
+Input fasta file format:
+any fasta file
+   
+Input annotations file format:
+tab delimited headings of annotation names (1 word), with search string first 
+column followed by tab delimited annotation data
+   
+Output
+fasta file with header replaced a not found file with enteries not found written 
+as 'outfile.notfound.*'
 
----------------------------------------------------------------------------------------"""
+--------------------------------------------------------------------------------   
+usage:   add_annotations_to_fasta.py -i in.fasta -a annotations.txt -o out.file
+"""
+
+#-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
 from string import strip
-from optparse import OptionParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 from Bio import SeqIO
 
+#-------------------------------------------------------------------------------
 #function declarations
 def add_annot(records, notfoundfile):
     """this is a generator function to create the new record if needed"""    
@@ -36,20 +39,23 @@ def add_annot(records, notfoundfile):
             record.description = ''
         yield record
 
-#---------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 #Body
 print "Running..."
 
 if __name__ == '__main__':
-    parser = OptionParser(usage = "usage: add_annotations_to_fasta.py -i in.fasta -a annotations.txt -o out.file",                  
-    description='1/28/14 add_annotations_to_fasta.py, basic fasta file header query and add annotations')
-    parser.add_option("-i", "--input_file", action="store", type="string", dest="inputfilename",
-                  help="text fasta file")
-    parser.add_option("-a", "--annotations_text", action="store", type="string", dest="annotationfilename",
-                  help="tab-delimited annotations text file, first line headings, followed by entries for each sequence")
-    parser.add_option("-o", "--output_file", action="store", type="string", dest="outputfilename",
-                  help="fasta output file")
-    (options, args) = parser.parse_args()
+    parser = ArgumentParser(usage = "add_annotations_to_fasta.py -i in.fasta -a \
+annotations.txt -o out.file",
+                            description=__doc__, 
+                            formatter_class=RawDescriptionHelpFormatter)
+    parser.add_argument("-i", "--input_file", action="store", 
+                        dest="inputfilename", help="text fasta file")
+    parser.add_argument("-a", "--annotations_text", action="store", 
+                        dest="annotationfilename", help="tab-delimited annotations \
+text file, first line headings, followed by entries for each sequence")
+    parser.add_argument("-o", "--output_file", action="store", 
+                        dest="outputfilename", help="fasta output file")
+    options = parser.parse_args()
 
     mandatories = ["inputfilename", "annotationfilename", "outputfilename"]
     for m in mandatories:

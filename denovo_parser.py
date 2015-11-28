@@ -1,46 +1,54 @@
 #!/usr/bin/env python
-"""---------------------------------------------------------------------------------------"""
-"""Jackson Lee 5/19/12"""
-"""This script reads in a fasta file of picked otus and the same otu table and outputs the
-   UChime de novo input file for Usearch
-   
-   Input fasta file format:
-   denoised_all.fasta_rep_set.rc.fasta
-   
-   >0
-   GTCGAGCGCAGATGGAGGTGACACAAGCGGATAAGAGAACAGAATGCGAAGCATTCTTTTCCTTTTGTATTCTTTGTGT
-   
-   Input OTU table format:
-   denoised_otu_table.txt
-   
-   # QIIME v1.2.1-dev OTU table
-   #OTU ID Aeb.1   Aeb.2A  Aeb.2B  Eq.1    Eq.3    Eq.42   Eq.5    In.1    In.3    
-   0       0       0       0       0       0       0       0       0       0
-
-   Output file format:
-   >0 /ab=xxx/ 
-   GTCGAGCGCAGATGGAGGTGACACAAGCGGATAAGAGAACAGAATGCGAAGCATTCTTTTCCTTTTGTATTCTTTGTGT
 """
-"""---------------------------------------------------------------------------------------"""
-"""Header - Linkers, Libs, Constants"""
+--------------------------------------------------------------------------------
+Created:   Jackson Lee 5/19/12
+This script reads in a fasta file of picked otus and the same otu table and 
+outputs the UChime de novo input file for Usearch
+   
+Input fasta file format:
+denoised_all.fasta_rep_set.rc.fasta
+   
+>0
+GTCGAGCGCAGATGGAGGTGACACAAGCGGATAAGAGAACAGAATGCGAAGCATTCTTTTCCTTTTGTATTCTTTGTGT
+   
+Input OTU table format:
+denoised_otu_table.txt
+   
+# QIIME v1.2.1-dev OTU table
+#OTU ID Aeb.1   Aeb.2A  Aeb.2B  Eq.1    Eq.3    Eq.42   Eq.5    In.1    In.3    
+0       0       0       0       0       0       0       0       0       0
+
+Output file format:
+>0 /ab=xxx/ 
+GTCGAGCGCAGATGGAGGTGACACAAGCGGATAAGAGAACAGAATGCGAAGCATTCTTTTCCTTTTGTATTCTTTGTGT
+
+--------------------------------------------------------------------------------
+denovo_parser.py -i input_file.fasta -n input_otu_table.txt
+"""
+
+#-------------------------------------------------------------------------------
+#Header - Linkers, Libs, Constants
 from string import strip
-from optparse import OptionParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
-"""function declarations"""
+#-------------------------------------------------------------------------------
+#function declarations
 
-"""---------------------------------------------------------------------------------------"""
-"""Body"""
+#-------------------------------------------------------------------------------
+#Body
 print "Running..."
 
 if __name__ == '__main__':
-    parser = OptionParser(usage = "usage: denovo_parser.py -i input_file.fasta -n input_otu_table.txt",                  
-    description='5/19/12 JZL denovo_parser.py.  Read in FASTA and otu table and convert to uchime input format \
-    see docstring for all format considerations')
-    parser.add_option("-i", "--input_fasta", action="store", type="string", dest="inputfilename",
-                  help="fasta file of input sequences")
-    parser.add_option("-n", "--input_otutable", action="store", type="string", dest="inputotuname",
-                  help="input otu table")
-    (options, args) = parser.parse_args()
+    parser = ArgumentParser(usage = "denovo_parser.py -i input_file.fasta -n \
+input_otu_table.txt",
+                            description=__doc__, 
+                            formatter_class=RawDescriptionHelpFormatter)
+    parser.add_argument("-i", "--input_fasta", action="store", 
+                        dest="inputfilename",
+                        help="fasta file of input sequences")
+    parser.add_argument("-n", "--input_otutable", action="store", 
+                        dest="inputotuname", help="input otu table")
+    options = parser.parse_args()
 
     mandatories = ["inputfilename", "inputotuname"]
     for m in mandatories:

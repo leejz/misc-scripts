@@ -1,43 +1,47 @@
 #!/usr/bin/env python
-"""---------------------------------------------------------------------------------------
-Jackson Lee 12/9/14
-This script reads in a tab-delimited file and reports the top entry and % and outputs a 
-text file of top matches
+"""
+--------------------------------------------------------------------------------
+Creted:   Jackson Lee 12/9/14
 
-   Input file format:
-   header\t   annotation\t
+This script reads in a tab-delimited file and reports the top entry and % and
+outputs a text file of top matches
+
+Input file format:
+header\t   annotation\t
    
-   Output
-   header\t  top annotation\t   % of records
-   
-   usage:
-   consensus_taxonomy.py -i in.file -o out.file
+Output
+header\t  top annotation\t   % of records
 
+--------------------------------------------------------------------------------   
+usage:    consensus_taxonomy.py -i in.file -o out.file
+"""
 
----------------------------------------------------------------------------------------"""
+#-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
 from string import strip
-from optparse import OptionParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 import pandas as pd
 import csv
 
+#-------------------------------------------------------------------------------
 #function declarations
 
-#---------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 #Body
 print "Running..."
 
 if __name__ == '__main__':
-    parser = OptionParser(usage = "usage: consensus_taxonomy.py -i in.file -o out.file",                  
-    description='12/9/14 This script reads in a tab-delimited file and reports the top entry \
-and % and outputs a text file of top matches')
-    parser.add_option("-i", "--input_file", action="store", type="string", dest="inputfilename",
-                  help="text coverage file")
-    parser.add_option("-m", "--mapping_file", action="store", type="string", dest="mappingfilename",
-                  help="header\tbin mapping file (optional)", default='')
-    parser.add_option("-o", "--output_file", action="store", type="string", dest="outputfilename",
-                  help="text output file")
-    (options, args) = parser.parse_args()
+    parser = ArgumentParser(usage = "consensus_taxonomy.py -i in.file -o out.file",
+                            description=__doc__, 
+                            formatter_class=RawDescriptionHelpFormatter)
+    parser.add_argument("-i", "--input_file", action="store", 
+                        dest="inputfilename", help="text coverage file")
+    parser.add_argument("-m", "--mapping_file", action="store", 
+                        dest="mappingfilename", 
+                        help="header\tbin mapping file (optional)", default='')
+    parser.add_argument("-o", "--output_file", action="store", 
+                        dest="outputfilename", help="text output file")
+    options = parser.parse_args()
 
     mandatories = ["inputfilename", "outputfilename"]
     for m in mandatories:

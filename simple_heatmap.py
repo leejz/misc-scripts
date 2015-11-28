@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 """
-2/19/14 JZL simple_heatmap.py
+--------------------------------------------------------------------------------
+Created:   Jackson Lee 2/19/14
 
-This script reads a tab-delimited otu table file containing relative abundance and makes a simple
-heatmap of this data.  The tab-delimited otu is of raw counts.  The program will compute relative abundance
-and then determine which OTUs meet the n-ton cutoff and artificially set the 
-abundance so that the heat square shows up as a different color in the color map, highlighting these OTUs, or eliminate.
-   
-usage:
-python simple_heatmap.py -i input_otutable.txt -o output_file.pdf -n cutoff_int -X
+This script reads a tab-delimited otu table file containing relative abundance 
+and makes a simple heatmap of this data.  The tab-delimited otu is of raw counts.  
+The program will compute relative abundance and then determine which OTUs meet 
+the n-ton cutoff and artificially set the abundance so that the heat square shows
+ up as a different color in the color map, highlighting these OTUs, or eliminate.
 
 otutable file format (blank denotes zero):
 sample   In.1    In.3    In.4    
@@ -19,13 +18,16 @@ taxon3    0       0       0
 taxon4    0       0       0
 taxon5    0       0       5
 
+--------------------------------------------------------------------------------   
+usage:
+python simple_heatmap.py -i input_otutable.txt -o output_file.pdf -n cutoff_int -X
 """
 
-"""------------------------------------------------------------------------------------------"""
+#-------------------------------------------------------------------------------
 """Functions & Declarations"""
 
 from string import strip
-from optparse import OptionParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 import csv
 from numpy import divide,log10,arange
 import matplotlib.pyplot as plt
@@ -33,22 +35,29 @@ import matplotlib.cm as cm
 import matplotlib.colors as colors
 from matplotlib.ticker import FuncFormatter
 
-"""------------------------------------------------------------------------------------------"""
+#-------------------------------------------------------------------------------
 # setup command line arguments
 print "Running..."
 
 if __name__ == '__main__':
-    parser = OptionParser(usage = "usage: simple_heatmap.py -i input_otutable.txt -o output_file.pdf -n cutoff_int -X",
-                  description='2/19/14 JZL simple_heatmap.py')
-    parser.add_option("-i", "--input_otutable", action="store", type="string", dest="inputfilename",
-                  help="otu table file name (see docstring)")
-    parser.add_option("-o", "--output_pdf (optional)", action="store", type="string", dest="outputfilename",
-                  help="output pdf name", default=None)
-    parser.add_option("-n", "--n_ton_cutoff", action="store", type="float", dest="ntoncutoff",
-                  help="singleton, doubleton, etc cutoff", default=5)                                    
-    parser.add_option("-X", "--excludeflag", action="store_true", dest="excludeflag", default=False,
-                  help="use to exclude OTUs of the n_ton_cutoff rather than highlight")                  
-    (options, args) = parser.parse_args()
+    parser = ArgumentParser(usage = "simple_heatmap.py -i input_otutable.txt -o \
+output_file.pdf -n cutoff_int -X",
+                            description=__doc__, 
+                            formatter_class=RawDescriptionHelpFormatter)
+    parser.add_argument("-i", "--input_otutable", action="store", 
+                        dest="inputfilename",
+                        help="otu table file name (see docstring)")
+    parser.add_argument("-o", "--output_pdf (optional)", action="store", 
+                        dest="outputfilename",
+                        help="output pdf name", default=None)
+    parser.add_argument("-n", "--n_ton_cutoff", action="store", type=float, 
+                        dest="ntoncutoff",
+                        help="singleton, doubleton, etc cutoff", default=5)                                    
+    parser.add_argument("-X", "--excludeflag", action="store_true", 
+                        dest="excludeflag",
+                        help="use to exclude OTUs of the n_ton_cutoff rather \
+than highlight")                  
+    options = parser.parse_args()
 
     mandatories = ["inputfilename"]
     for m in mandatories:

@@ -1,10 +1,11 @@
 #!/usr/bin/env python
-"""---------------------------------------------------------------------------------------"""
-"""split_interleaved_fastq.py"""
-"""Jackson Lee 9/18/14"""
-"""This script reads in an fastq file and splits the interleaved file into a 1 and 2 mate pair of fastq files.
+"""
+--------------------------------------------------------------------------------
+Created:   Jackson Lee 9/18/14
+This script reads in an fastq file and splits the interleaved file into a 1 and 
+2 mate pair of fastq files.
    
-   Input fastq file
+Input fastq file
 @HISEQ06:204:C06F3ACXX:5:1101:1475:2407 1:N:0
 CAAANGCGCCCTCATCGAGCGGACGCTGACGCATGTCGACCTCGACGCGCAGCCCTTGAAAACGATCCTCGGCTGGGTCGAACTGGGCGAGAGAAAACGTCCCGACCTCGAATCCGCCTACTACGATATCCTGCTGACGCCGTTCGTG
 +
@@ -14,20 +15,18 @@ GGGCGAGGGGTCCTTCGCCACGAACGGCGTCAGCAGGATATCGTAGTAGGCGGATTCGAGGTCGGGACGTTTTCTCTCGC
 +
 BCCFFFFFHHDHHGHIJJJJJJJJJJJJJIHHHFFFFDEEEEDDDDDEDDDDDDDDDDEDD7CBDD@BD;BDDDDDDDDDDDDDDDDDDDDDDDDDD>BD@CCDCDDDDDDCDBBBDDDDDDDDBBD0?<9>3&4:>BB@<@B<@>9>
 
-   usage:
-   split_interleaved_fastq.py -i sequence.fastq 
-   
+--------------------------------------------------------------------------------
+usage:   split_interleaved_fastq.py -i sequence.fastq    
 """
 
-"""---------------------------------------------------------------------------------------"""
-"""Header - Linkers, Libs, Constants"""
+#-------------------------------------------------------------------------------
+#Header - Linkers, Libs, Constants
 from string import strip
 from Bio import SeqIO
-from optparse import OptionParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
-"""---------------------------------------------------------------------------------------"""
-
-"""function declarations"""
+#-------------------------------------------------------------------------------
+#function declarations
 
 def writeline_fastq(record, file):
     """write a single fastq record to a file"""    
@@ -36,16 +35,18 @@ def writeline_fastq(record, file):
     file.write('+\n')
     file.write(record.letter_annotations + '\n')            
 
-"""---------------------------------------------------------------------------------------"""
+#-------------------------------------------------------------------------------
 """Body"""
 print "Running..."
 
 if __name__ == '__main__':
-    parser = OptionParser(usage = "usage:    split_interleaved_fastq.py -i sequence.fastq ",                  
-    description='9/18/14 JZL This script reads in an fastq file and splits the interleaved file into a 1 and 2 mate pair of fastq files.')
-    parser.add_option("-i", "--input_fastq", action="store", type="string", dest="inputfilename",
-                  help="fastq file of input sequences")
-    (options, args) = parser.parse_args()
+    parser = ArgumentParser(usage = "split_interleaved_fastq.py -i sequence.fastq",
+                            description=__doc__, 
+                            formatter_class=RawDescriptionHelpFormatter)
+    parser.add_argument("-i", "--input_fastq", action="store", 
+                        dest="inputfilename",
+                        help="fastq file of input sequences")
+    options = parser.parse_args()
 
     mandatories = ["inputfilename"]
     for m in mandatories:

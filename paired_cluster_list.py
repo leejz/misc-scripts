@@ -1,47 +1,56 @@
 #!/usr/bin/env python
-"""---------------------------------------------------------------------------------------"""
-"""paired_cluster_list.py"""
-"""Jackson Lee 7/1/14"""
-"""This script converts a single filter readlist to a paired readlist
+"""
+--------------------------------------------------------------------------------
+Created:   Jackson Lee 7/1/14
+This script converts a single filter readlist to a paired readlist. This script
+is used in AMOS Ray cluster file filtering.
 
-   Input cluster file format:
-   header\t   number\tnumber
+Input cluster file format:
+readindex
+readindex
+offsetindex
+offsetreadindex
+offsetreadindex
    
-   Input filter file format:
-   contig-01
-   contig-02
-   etc...
    
-   Output
-   number
-   number
-   etc...
-   
-   usage:
-   paired_cluster_list.py -i listofreads.txt -p lastline.interger -o outputfilename
+Output
+readindex1
+readindex2
+offsetindex
+offsetreadindex1 - offsetindex
+offsetreadindex2 - offsetindex
+etc...
+
+--------------------------------------------------------------------------------   
+usage:   paired_cluster_list.py -i listofreads.txt -p lastline.interger -o outputfilename
 """
 
-"""---------------------------------------------------------------------------------------"""
-"""Header - Linkers, Libs, Constants"""
+#-------------------------------------------------------------------------------
+#Header - Linkers, Libs, Constants
 from string import strip
-from optparse import OptionParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
-"""function declarations"""
+#-------------------------------------------------------------------------------
+#function declarations
 
-"""---------------------------------------------------------------------------------------"""
+#-------------------------------------------------------------------------------
 """Body"""
 print "Running..."
 
 if __name__ == '__main__':
-    parser = OptionParser(usage = "usage: paired_cluster_list.py -i listofreads.txt -p lastline.integer -o outputfilename",                  
-    description='JZL 7/1/14 This script converts a single filter readlist to a paired readlist.')
-    parser.add_option("-i", "--linenum_file", action="store", type="string", dest="linenumfilename",
-                  help="list of sequential reads from a paired file")
-    parser.add_option("-p", "--paired_index", action="store", type="int", dest="pairedindex",
-                  help="last line index to split file", default = 0)
-    parser.add_option("-o", "--output_file", action="store", type="string", dest="outputfilename",
-                  help="text output file")
-    (options, args) = parser.parse_args()
+    parser = ArgumentParser(usage = "paired_cluster_list.py -i listofreads.txt \
+-p lastline.integer -o outputfilename",
+                            description=__doc__, 
+                            formatter_class=RawDescriptionHelpFormatter)
+    parser.add_argument("-i", "--linenum_file", action="store", 
+                        dest="linenumfilename",
+                        help="list of sequential reads from a paired file")
+    parser.add_argument("-p", "--paired_index", action="store", type=int, 
+                        dest="pairedindex",
+                        help="last line index to split file", default = 0)
+    parser.add_argument("-o", "--output_file", action="store", 
+                        dest="outputfilename", help="text output file")
+    options = parser.parse_args()
 
     mandatories = ["linenumfilename", "pairedindex", "outputfilename"]
     for m in mandatories:
@@ -55,9 +64,8 @@ if __name__ == '__main__':
     outputfilename = options.outputfilename
     
     print "Read in linenum file..."
-    linenumfile = open(linenumfilename, 'U')
-    readnum_list = [int(linenum.strip()) for linenum in linenumfile]
-    linenumfile.close()
+    with open(linenumfilename, 'U') as linenumfile:
+        readnum_list = [int(linenum.strip()) for linenum in linenumfile]
             
     print "Combining forward and reverse read lists..."
     
@@ -68,9 +76,8 @@ if __name__ == '__main__':
     pairednum_list.sort()	
         
     print "Writing " + outputfilename
-    outputfile = open(outputfilename, 'w')
-    for readnum in pairednum_list:
-        outputfile.write(str(readnum)+"\n")
-    outputfile.close()
+    with open(outputfilename, 'w') as outputfile:
+        for readnum in pairednum_list:
+            outputfile.write(str(readnum)+"\n")
         
     print "Done!"

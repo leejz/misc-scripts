@@ -1,41 +1,48 @@
-#!/usr/bin/python
-"""5/19/12 JZL tax_rank_comparison.py
+#!/usr/bin/env python
+"""
+--------------------------------------------------------------------------------
+Created:   Jackson Lee 5/19/12
    
-   This script reads a tab file containing reference taxonomy and a file containing classified 
-   taxonomy and compares each rank. The script outputs how many of the comparison matches 
+This script reads a tab file containing reference taxonomy and a file containing 
+classified taxonomy and compares each rank. The script outputs how many of the 
+comparison matches 
    
-   usage:
-   python tax_rank_comparison.py -t classified.taxonomy -T reference.taxonomy
+input:
+a file of taxonomies with the format:
+OrySativ Bacteria;Proteobacteria;Alphaproteobacteria;unclassified;
+MarMet17 Bacteria;Proteobacteria;Gammaproteobacteria;unclassified;
+etc.
    
-   input:
-   a file of taxonomies with the format:
-   OrySativ Bacteria;Proteobacteria;Alphaproteobacteria;unclassified;
-   MarMet17 Bacteria;Proteobacteria;Gammaproteobacteria;unclassified;
-   etc.
-   
-   NOTE: files may need to be parsed into this format from other formats
+ NOTE: files may need to be parsed into this format from other formats
 
-   Output:
-   a listing of each taxonomic rank and the number of matches, and the total number of entries examined.
-   """
-"""------------------------------------------------------------------------------------------"""
-"""Functions & Declarations"""
+Output:
+a listing of each taxonomic rank and the number of matches, and the total 
+number of entries examined.
+
+--------------------------------------------------------------------------------
+usage:  tax_rank_comparison.py -t classified.taxonomy -T reference.taxonomy
+"""
+#-------------------------------------------------------------------------------
+#Functions & Declarations
     
 from string import strip
-from optparse import OptionParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
-"""------------------------------------------------------------------------------------------"""
-# Load files
+#-------------------------------------------------------------------------------
+#Body
 print "Running..."
 
 if __name__ == '__main__':
-    parser = OptionParser(usage = "usage:    python tax_rank_comparison.py -t classified.taxonomy -T reference.taxonomy",                  
-    description='5/19/12 JZL tax_rank_comparison.py.  Read in two taxonomy files and see how they compare')
-    parser.add_option("-t", "--classified_tax", action="store", type="string", dest="classtaxname",
-                  help="classified taxonomy file")
-    parser.add_option("-T", "--reference_tax", action="store", type="string", dest="reftaxname",
-                  help="reference taxonomy file")
-    (options, args) = parser.parse_args()
+    parser = ArgumentParser(usage = "tax_rank_comparison.py -t classified.taxonomy -T reference.taxonomy",
+                            description=__doc__, 
+                            formatter_class=RawDescriptionHelpFormatter)
+    parser.add_argument("-t", "--classified_tax", action="store", 
+                        dest="classtaxname",
+                        help="classified taxonomy file")
+    parser.add_argument("-T", "--reference_tax", action="store", 
+                        dest="reftaxname",
+                        help="reference taxonomy file")
+    options = parser.parse_args()
 
     mandatories = ["reftaxname", "classtaxname"]
     for m in mandatories:

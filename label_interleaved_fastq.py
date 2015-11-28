@@ -1,10 +1,12 @@
 #!/usr/bin/env python
-"""---------------------------------------------------------------------------------------
-label_interleaved_fastq.py
-Jackson Lee 9/18/14
-This script reads in an fastq file and fixes duplicate sequence names so a mate pair file can be generated
+"""
+--------------------------------------------------------------------------------
+Created:   Jackson Lee 9/18/14
+
+This script reads in an fastq file and fixes duplicate sequence names so a mate 
+pair file can be generated
    
-   Input fastq file
+Input fastq file
 @HISEQ06:204:C06F3ACXX:5:1101:1475:2407 1:N:0
 CAAANGCGCCCTCATCGAGCGGACGCTGACGCATGTCGACCTCGACGCGCAGCCCTTGAAAACGATCCTCGGCTGGGTCGAACTGGGCGAGAGAAAACGTCCCGACCTCGAATCCGCCTACTACGATATCCTGCTGACGCCGTTCGTG
 +
@@ -14,19 +16,18 @@ GGGCGAGGGGTCCTTCGCCACGAACGGCGTCAGCAGGATATCGTAGTAGGCGGATTCGAGGTCGGGACGTTTTCTCTCGC
 +
 BCCFFFFFHHDHHGHIJJJJJJJJJJJJJIHHHFFFFDEEEEDDDDDEDDDDDDDDDDEDD7CBDD@BD;BDDDDDDDDDDDDDDDDDDDDDDDDDD>BD@CCDCDDDDDDCDBBBDDDDDDDDBBD0?<9>3&4:>BB@<@B<@>9>
 
-   usage:
-   label_interleaved_fastq.py -i sequence.fastq 
-   
+--------------------------------------------------------------------------------
+usage:   label_interleaved_fastq.py -i sequence.fastq 
+"""   
 
 
----------------------------------------------------------------------------------------"""
+#-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
 from string import strip
 from Bio import SeqIO
-from optparse import OptionParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
-#---------------------------------------------------------------------------------------
-
+#-------------------------------------------------------------------------------
 #function declarations
 
 def writeline_fastq(record, file):
@@ -36,16 +37,17 @@ def writeline_fastq(record, file):
     file.write('+\n')
     file.write(record.letter_annotations + '\n')            
 
-#---------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 #Body
 print "Running..."
 
 if __name__ == '__main__':
-    parser = OptionParser(usage = "usage:	label_interleaved_fastq.py -i sequence.fastq ",                  
-    description='9/18/14 JZL This script reads in an fastq file and fixes duplicate sequence names so a mate pair file can be generated.')
-    parser.add_option("-i", "--input_fastq", action="store", type="string", dest="inputfilename",
+    parser = ArgumentParser(usage = "label_interleaved_fastq.py -i sequence.fastq",
+                            description=__doc__, 
+                            formatter_class=RawDescriptionHelpFormatter)
+    parser.add_argument("-i", "--input_fastq", action="store", dest="inputfilename",
                   help="fastq file of input sequences")
-    (options, args) = parser.parse_args()
+    options = parser.parse_args()
 
     mandatories = ["inputfilename"]
     for m in mandatories:

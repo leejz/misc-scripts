@@ -1,30 +1,28 @@
 #!/usr/bin/env python
-"""---------------------------------------------------------------------------------------"""
-"""filter_fasta_by_len.py"""
-"""Jackson Lee 7/8/14"""
-"""This script reads in a fasta or fastq and filters for sequences greater or less than a threshold
+"""
+--------------------------------------------------------------------------------
+Created:  Jackson Lee 7/8/14
+This script reads in a fasta or fastq and filters for sequences greater or less 
+than a threshold length
    
-   Input fastq file
-   @2402:1:1101:1392:2236/2
-   CATAGTCTTCGGCGCCATCGTCATCCTCTACACCCTCAAGGCGAGCGGCGCGATGGAGACAATCCAGTGGGGCATGCAGCAGGTGACACCGGACTCCCGGATCCA
-   +
-   @@CFFFFFGHHHHIJJIIJIHIJIIIIJIIGEIJJIJJJJJIIIJHFFDDBD8BBD>BCBCCDDDCDCCCDBDDDDDDDDDDD<CDDDDDDDDBBCDDBD<<BDD
+Input fastq file
+@2402:1:1101:1392:2236/2
+GATAGTCTTCGGCGCCATCGTCATCCTCTACACCCTCAAGGCGAGCGGCGCGATGGAGACAATCCAGTGGGGCATGCAGCAGGTGACACCGGACTCCCGGATCCA
++
+@@CFFFFFGHHHHIJJIIJIHIJIIIIJIIGEIJJIJJJJJIIIJHFFDDBD8BBD>BCBCCDDDCDCCCDBDDDDDDDDDDD<CDDDDDDDDBBCDDBD<<BDD
    
-   
-   usage:
-   filter_fasta_by_len.py -i sequence.fasta -g filter_greater_than -l filter_less_than 
-   
+--------------------------------------------------------------------------------
+usage:   filter_fasta_by_len.py -i sequence.fasta -g filter_greater_than -l filter_less_than 
 """
 
-"""---------------------------------------------------------------------------------------"""
-"""Header - Linkers, Libs, Constants"""
+#-------------------------------------------------------------------------------
+#Header - Linkers, Libs, Constants
 from string import strip
 from Bio import SeqIO
-from optparse import OptionParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
-"""---------------------------------------------------------------------------------------"""
-
-"""function declarations"""
+#-------------------------------------------------------------------------------
+#function declarations
 
 def process_and_generate(input_iterator, threshold, greaterflag):
     """Reusable function that processes a record, then generates each record.
@@ -41,20 +39,25 @@ def process_and_generate(input_iterator, threshold, greaterflag):
             if len(rec.seq) >= threshold:
                 yield rec
 
-"""---------------------------------------------------------------------------------------"""
-"""Body"""
+#-------------------------------------------------------------------------------
+#Body
 print "Running..."
 
 if __name__ == '__main__':
-    parser = OptionParser(usage = "usage:    filter_fasta_by_len.py -i sequence.fasta -g filter_greater_than -l filter_less_than",                  
-    description='7/8/14 JZL This script reads in an FASTA OR FASTQ and filters for sequences greater or less than a threshold.')
-    parser.add_option("-i", "--input_fastq", action="store", type="string", dest="inputfilename",
-                  help="fastq file of input sequences")
-    parser.add_option("-g", "--filter_greater_than", action="store", type="int", dest="greaterthan",
-                  help="filter out sequences greater than or equal to this size")
-    parser.add_option("-l", "--filter_less_than", action="store", type="int", dest="lessthan",
-                  help="filter out sequences less than or equal this size")
-    (options, args) = parser.parse_args()
+    parser = ArgumentParser(usage = "filter_fasta_by_len.py -i sequence.fasta -g filter_greater_than -l filter_less_than",
+                            description=__doc__, 
+                            formatter_class=RawDescriptionHelpFormatter)
+    parser.add_argument("-i", "--input_fastq", action="store", 
+                        dest="inputfilename",
+                        help="fastq file of input sequences")
+    parser.add_argument("-g", "--filter_greater_than", action="store", type=int, 
+                        dest="greaterthan",
+                        help="filter out sequences greater than or equal to \
+this size")
+    parser.add_argument("-l", "--filter_less_than", action="store", type=int, 
+                        dest="lessthan",
+                        help="filter out sequences less than or equal this size")
+    options = parser.parse_args()
 
     mandatories = ["inputfilename"]
     for m in mandatories:
@@ -65,7 +68,7 @@ if __name__ == '__main__':
 
     inputfilename = options.inputfilename
     left, __, right = inputfilename.rpartition('.')
-    fasta =['fa','fasta','faa','fas']
+    fasta =['fa','fasta','faa','fas', 'fna']
     fastq =['fq','fastq']
     if right in fasta:
         ext = "fasta"

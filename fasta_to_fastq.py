@@ -1,9 +1,11 @@
 #!/usr/bin/env python
+"""
+--------------------------------------------------------------------------------
+Created:  Jackson Lee 8/4/15
 
-"""---------------------------------------------------------------------------------------
-Jackson Lee 8/4/15
 Quick script to convert fasta/qual to fastq
 
+from:
 http://seqanswers.com/forums/showthread.php?t=16925
 
 from Bio import SeqIO
@@ -14,36 +16,36 @@ count = SeqIO.write(records, handle, "fastq")
 handle.close()
 print "Converted %i records" % count
 
----------------------------------------------------------------------------------------"""
+--------------------------------------------------------------------------------
+usage:   fasta_to_fastq.py -i input.fasta -q qual.txt -o output.fastq
+"""
 
+#-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
 
 from Bio import SeqIO
 from Bio.SeqIO.QualityIO import PairedFastaQualIterator
-from optparse import OptionParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
-
-#---------------------------------------------------------------------------------------
-
+#-------------------------------------------------------------------------------
 #function declarations
-
-
-             
-
-#---------------------------------------------------------------------------------------
+    
+#-------------------------------------------------------------------------------
 #Body
 print "Running..."
 
 if __name__ == '__main__':
-    parser = OptionParser(usage = "usage:    fasta_to_fastq.py -i input.fasta -q qual.txt -o output.fastq",
-    description="Jackson Lee 8/4/15 Quick script to convert fasta/qual to fastq")
-    parser.add_option("-i", "--input_fasta", action="store", type="string", dest="fastaname",
-                  help="fasta file")
-    parser.add_option("-q", "--qual_file", action="store", type="string", dest="qualname",
-                  help="paired 454 qual file")
-    parser.add_option("-o", "--output_fastq", action="store", type="string", dest="outputfastqname",
-                  help="output fastq file")                  
-    (options, args) = parser.parse_args()
+    parser = ArgumentParser(usage = "fasta_to_fastq.py -i input.fasta -q qual.txt\
+ -o output.fastq",
+                            description=__doc__, 
+                            formatter_class=RawDescriptionHelpFormatter)
+    parser.add_argument("-i", "--input_fasta", action="store", 
+                        dest="fastaname", help="fasta file")
+    parser.add_argument("-q", "--qual_file", action="store", dest="qualname",
+                        help="paired 454 qual file")
+    parser.add_argument("-o", "--output_fastq", action="store", 
+                        dest="outputfastqname", help="output fastq file")                  
+    options = parser.parse_args()
 
     mandatories = ["fastaname", "qualname", "outputfastqname"]
     for m in mandatories:

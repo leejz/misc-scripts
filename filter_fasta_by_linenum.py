@@ -1,50 +1,57 @@
 #!/usr/bin/env python
-"""---------------------------------------------------------------------------------------"""
-"""Jackson Lee 12/4/12"""
-"""This script reads in a fasta file and a text file of numbers and filters all sequences in order
+"""
+--------------------------------------------------------------------------------
+Created:   Jackson Lee 12/4/12
+This script reads in a fasta file and a text file of numbers and filters all 
+sequences in order.
    
-   Input fasta file format:
-   4098968.combined_unique.fa
+Input fasta file format:
+4098968.combined_unique.fa
    
-   >Sequence0000000001
-   GCGCCCCTACGGGGAACGTTTTACTTCCAGTTTTAAAGCAGCTTTTACCCATCCAAACTCTGCGGTAACTTTATCATAAATTGTGGTAATATCTTCTGAT   
+>Sequence0000000001
+GCGCCCCTACGGGGAACGTTTTACTTCCAGTTTTAAAGCAGCTTTTACCCATCCAAACTCTGCGGTAACTTTATCATAAATTGTGGTAATATCTTCTGAT   
 
-   Input filter file format:
-   one number per line matching the sequence order number in order. 0 being first
+Input filter file format:
+one number per line matching the sequence order number in order. 0 being first
    
-   0
-   5
-   10 
-   22
-   etc.
+0
+5
+10 
+22
+etc.
    
-   Output file format:
-   4098968.combined_unique.filtered.fa
+Output file format:
+4098968.combined_unique.filtered.fa
    
-   usage:
-   filter_fasta_by_linenum.py -i input.fa -f filter.txt
+--------------------------------------------------------------------------------
+usage:   filter_fasta_by_linenum.py -i input.fa -f filter.txt
 """
 
-"""---------------------------------------------------------------------------------------"""
-"""Header - Linkers, Libs, Constants"""
+#-------------------------------------------------------------------------------
+#Header - Linkers, Libs, Constants
 from string import strip
-from optparse import OptionParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 from random import shuffle
 
-"""function declarations"""
+#-------------------------------------------------------------------------------
+#function declarations
 
-"""---------------------------------------------------------------------------------------"""
-"""Body"""
+#-------------------------------------------------------------------------------
+#Body
 print "Running..."
 
 if __name__ == '__main__':
-    parser = OptionParser(usage = "usage:    filter_fasta_by_linenum.py -i input.fa -f filter.txt",                  
-    description='2/7/13 JZL filter_fasta_by_linenum.py.  reads in a fasta file and text file and filters sequences by line number')
-    parser.add_option("-i", "--input_fasta", action="store", type="string", dest="inputfilename",
-                  help="fasta file of input sequences")
-    parser.add_option("-f", "--filter_text", action="store", type="string", dest="filterfilename",
-                  help="filter text file (See DocString for format)")
-    (options, args) = parser.parse_args()
+    parser = ArgumentParser(usage = "filter_fasta_by_linenum.py -i input.fa -f \
+filter.txt",
+                            description=__doc__, 
+                            formatter_class=RawDescriptionHelpFormatter)
+    parser.add_argument("-i", "--input_fasta", action="store", 
+                        dest="inputfilename",
+                        help="fasta file of input sequences")
+    parser.add_argument("-f", "--filter_text", action="store", 
+                        dest="filterfilename",
+                        help="filter text file (See DocString for format)")
+    options = parser.parse_args()
 
     mandatories = ["inputfilename", "filterfilename"]
     for m in mandatories:
@@ -59,13 +66,11 @@ if __name__ == '__main__':
     outputfilename = left +'.filtered.' + right
     
     print "Reading files..."
-    fastainfile = open(fastafilename,'U')
-    fasta_lines = [line.strip() for line in fastainfile]
-    fastainfile.close()
+    with open(fastafilename,'U') as fastainfile:
+        fasta_lines = [line.strip() for line in fastainfile]
     
-    filterfile = open(filterfilename, 'U')
-    linenums = [line.strip() for line in filterfile]
-    filterfile.close()
+    with open(filterfilename, 'U') as filterfile:
+        linenums = [line.strip() for line in filterfile]
     
     large_fasta = []
     header = ''
@@ -84,12 +89,9 @@ if __name__ == '__main__':
             print 'last line!'
     
     print "Writing Fasta file: " + outputfilename
-    outfile = open(outputfilename, 'w')
-    
-    for linenum in linenums:
-        outfile.write(large_fasta[int(linenum)][0]+'\n')
-        outfile.write(large_fasta[int(linenum)][1]+'\n')
-
-    outfile.close()
+    with open(outputfilename, 'w') as outfile:    
+        for linenum in linenums:
+            outfile.write(large_fasta[int(linenum)][0]+'\n')
+            outfile.write(large_fasta[int(linenum)][1]+'\n')
 
     print "Done!"

@@ -1,6 +1,6 @@
 
 def dist_whittaker(datamtx, strict=True):
-    """ returns whittaker distance (manhattan distance with sample normalization) btw rows
+    """ returns whittaker distance (manhattan distance with sample normalization) btw rows. This script interfaces with Cogent for adding the extra metric in QIIME in beta_diversity.py
     
     dist(a,b) = 0.5*manhattan distance(ai/A, bi/B) where ai is each element of a, and A is the sum of all ai. 1 indicates complete similarity, 0 indicates complete dissimilarity.
     

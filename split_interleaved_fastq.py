@@ -46,6 +46,9 @@ if __name__ == '__main__':
     parser.add_argument("-i", "--input_fastq", action="store", 
                         dest="inputfilename",
                         help="fastq file of input sequences")
+    parser.add_argument("-f", "--mate_format", action="store", 
+                        dest="mate_format", default = ' ',
+                        help="fastq file illumina mate format (' ' default, '/' for older illimuna reads")
     options = parser.parse_args()
 
     mandatories = ["inputfilename"]
@@ -54,37 +57,32 @@ if __name__ == '__main__':
             print "\nError: Missing Arguments\n"
             parser.print_help()
             exit(-1)
+   
+    if options.mate_format not in ('/', ' '):
+        print "\nError: Invalid mate read delimiter"
+        parser.print_help()
+        exit(-1)
+    else:
+        mate_format = options.mate_format
 
     inputfilename = options.inputfilename
     infile = open(inputfilename,'U')      
-    left, __, right = inputfilename.rpartition('.')
+    left, _, right = inputfilename.rpartition('.')
     outputfilename1 = left + '.1.' + right
     outputfilename2 = left + '.2.' + right
     
     parse_iterator = SeqIO.parse(infile, "fastq")
         
-    print "Processing fasta read file...\n"        
+    print "Processing fastq read file...\n"        
     
-    with open(inputfilename, 'U') as inputfile:
-        out1 = open(outputfilename1, 'w')
-        out2 = open(outputfilename2, 'w')
-        oldrec = []
-        old_mate = ''
-        old_name = ''
+    with open(inputfilename, 'U') as inputfile, open(outputfilename1, 'w') as out1, open(outputfilename2, 'w') as out2:
         for record in parse_iterator:
-            cur_mate = record.description.split(' ')[1][0]
-            cur_name = record.name
+            next_rec = parse_iterator.next()
+            nex_name, nex_mate = next_rec.description.split(mate_format)
+            cur_name, cur_mate = record.description.split(mate_format)
             
-            if cur_mate == '2' and old_mate == '1' and old_name == cur_name:
-                out1.write(oldrec.format("fastq"))
-                out2.write(record.format("fastq"))
-            oldrec = record[:]
-            old_mate = cur_mate[:]
-            old_name = cur_name[:]
-            
-        
-    infile.close()
-    out1.close()
-    out2.close()
+            if nex_mate == '2' and cur_mate == '1' and nex_name == cur_name:
+                out1.write(record.format("fastq"))
+                out2.write(next_rec.format("fastq"))
     
     print "Done!"

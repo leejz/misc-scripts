@@ -19,7 +19,7 @@ GCGCCCCTACGGGGAACGTTTTACTTCCAGTTTTAAAGCAGCTTTTACCCATCCAAACTCTGCGGTAACTTTATCATAAA
 GCGCCCCTACGGGGAACGTTTTACTTCCAGTTTTAAAGCAGCTTTTACCCATCCAAACTCTGCGGTAACTTTATCATAAATTGTGGTAATATCTTCTGAT   
 etc.
 --------------------------------------------------------------------------------   
-usage:   DNA_translation_picker.py -i input.fa -o output.faa
+usage:   DNA_translation_picker.py -i input.fa -o output.faa -t
 """
 
 #-------------------------------------------------------------------------------
@@ -41,8 +41,7 @@ def reverseComplement(sequence):
 print "Running..."
 
 if __name__ == '__main__':
-    parser = ArgumentParser(usage = "combine_fa_coverage.py -i input.fa -c \
-coverage.file",
+    parser = ArgumentParser(usage = "DNA_translation_picker.py -i input.fa -o output.faa -t",
                             description=__doc__, 
                             formatter_class=RawDescriptionHelpFormatter)
     parser.add_argument("-i", "--input_fasta", action="store", 

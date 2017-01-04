@@ -3,8 +3,8 @@
 --------------------------------------------------------------------------------
 Created: Jackson Lee 2012
 
-This script plots the rarefaction curve with error bars as shaded colors. 
-No files associated
+This script plots data from rarefaction curves with error bars as shaded colors. 
+No files associated. This is a demo.
 
 """
 #-------------------------------------------------------------------------------

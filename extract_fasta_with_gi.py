@@ -18,7 +18,7 @@ output file:
 same, but with only the selected files
 
 --------------------------------------------------------------------------------   
-usage:    python extract_fasta_with_gi.py -i input.fasta -g input.list.txt -o output.fasta
+usage:    extract_fasta_with_gi.py -i input.fasta -g input.list.txt -o output.fasta
 """
 #-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
@@ -35,7 +35,7 @@ print "Running..."
 
 
 if __name__ == '__main__':
-    parser = ArgumentParser(usage = "python extract_fasta_with_gi.py -i \
+    parser = ArgumentParser(usage = "extract_fasta_with_gi.py -i \
 input.fasta -g input.list.txt -o output.fasta",
                             description=__doc__, 
                             formatter_class=RawDescriptionHelpFormatter)

@@ -39,7 +39,7 @@ CatchAll.Ob.1.txt
 The script generates a shell file 'CatchAll.sh' to run each sample as well
 
 --------------------------------------------------------------------------------
-usage:   python generate_CatchAll_infile.py -i input_directory -o output_dir
+usage:   generate_CatchAll_infile.py -i input_directory -o output_dir
 """
 
 #-------------------------------------------------------------------------------
@@ -108,7 +108,7 @@ import os
 print "Running..."
 
 if __name__ == '__main__':
-    parser = ArgumentParser(usage = "python generate_CatchAll_infile.py -i input_directory",
+    parser = ArgumentParser(usage = "generate_CatchAll_infile.py -i input_directory",
                             description=__doc__, 
                             formatter_class=RawDescriptionHelpFormatter)
     parser.add_argument("-i", "--input_directory", action="store", 

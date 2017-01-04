@@ -36,7 +36,7 @@ etc
 
 --------------------------------------------------------------------------------
 usage:
-python phylogeny_listing.py -t OTU_tax.txt -u picked_otu.txt -o outfile.txt
+phylogeny_listing.py -t OTU_tax.txt -u picked_otu.txt -o outfile.txt
 """
 #-------------------------------------------------------------------------------
 """Functions & Declarations"""

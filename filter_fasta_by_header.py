@@ -38,7 +38,7 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "filter_fasta_by_header.py -i input.fa -f \
@@ -57,15 +57,15 @@ filter.txt -n flipflag",
     mandatories = ["inputfilename", "filterfilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
             
     flipflag = options.flipflag
     if flipflag:
-        print "flipflag found, this script will keep only fasta sequences NOT in the filter list" 
+        print("flipflag found, this script will keep only fasta sequences NOT in the filter list" )
     else:
-        print "this script will keep only fasta sequences in the filter list" 
+        print("this script will keep only fasta sequences in the filter list" )
     fastafilename = options.inputfilename
     filterfilename = options.filterfilename
     left, dot, right = fastafilename.rpartition('.')
@@ -89,7 +89,7 @@ filter.txt -n flipflag",
     fastainfile.close()
     
     
-    print "Writing Fasta file: " + outputfilename
+    print("Writing Fasta file: " + outputfilename)
     fastainfile = open(fastafilename,'U')
     outfile = open(outputfilename, 'w')
     badoutputsfile = open(badoutputsfilename, 'w')
@@ -129,4 +129,4 @@ filter.txt -n flipflag",
     outfile.close()
     badoutputsfile.close()
 
-    print "Done!"
+    print("Done!")

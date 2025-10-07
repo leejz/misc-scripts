@@ -33,7 +33,7 @@ from Bio import SeqIO
     
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "mark_duplicates.py -i fa.file -o out.txt",
@@ -51,7 +51,7 @@ if __name__ == '__main__':
     
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
 
@@ -74,4 +74,4 @@ if __name__ == '__main__':
             if len(seq_names) > 1:
                 writer.writerow(seq_names)
                 
-    print "Done!"
+    print("Done!")

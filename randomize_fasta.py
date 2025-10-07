@@ -29,7 +29,7 @@ from random import shuffle
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "randomize_fasta.py -i input.fa -o output.fa",
@@ -46,14 +46,14 @@ if __name__ == '__main__':
     mandatories = ["inputfilename", "outputfilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
             
     fastafilename = options.inputfilename
     outputfilename = options.outputfilename
     
-    print "Reading Fasta file..."
+    print("Reading Fasta file...")
     with open(fastafilename,'U') as fastainfile:
         fasta_lines = [line.strip() for line in fastainfile]
     
@@ -71,9 +71,9 @@ if __name__ == '__main__':
             fasta = fasta + line
         if iter == len(fasta_lines)-1:
             large_fasta.append([header,fasta])
-            print 'last line!'
+            print('last line!')
     
-    print "Writing randomized Fasta file: " + outputfilename
+    print("Writing randomized Fasta file: " + outputfilename)
 
     shuffle(large_fasta)    
     with open(outputfilename, 'w') as outfile:    
@@ -81,4 +81,4 @@ if __name__ == '__main__':
             outfile.write(fastaline[0]+'\n')
             outfile.write(fastaline[1]+'\n')
 
-    print "Done!"
+    print("Done!")

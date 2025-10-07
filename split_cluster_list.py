@@ -35,7 +35,7 @@ import csv
 
 #-------------------------------------------------------------------------------      
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
 
@@ -56,7 +56,7 @@ if __name__ == '__main__':
     mandatories = ["clusterfilename", "filterlist"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
                         
@@ -67,12 +67,12 @@ if __name__ == '__main__':
     
     mappingflag = False
     if options.mappingfilename != None:        
-        print "Mapping file detected.  Reading file."
+        print("Mapping file detected.  Reading file.")
         mappingflag = True
         with open(options.mappingfilename, 'U') as mappingfile:
             mapping_list = [int(line.strip()) for line in mappingfile]
 
-    print "Matching records and parsing..."
+    print("Matching records and parsing...")
     
     clusterfile = open(clusterfilename, 'U')
     reader = csv.reader(clusterfile, dialect='excel-tab')
@@ -93,4 +93,4 @@ if __name__ == '__main__':
                         output_counter[bisect_left(filterlist, int(readnum))-1] +=1                
             outputfilewriter.writerow([line[0]] + map(str, output_counter))
     clusterfile.close()
-    print "Done!"
+    print("Done!")

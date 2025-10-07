@@ -35,7 +35,7 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "reorder_file_from_list.py -i input.tab -s source.tab",
@@ -52,7 +52,7 @@ if __name__ == '__main__':
     mandatories = ["inputfilename", "sourcefilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
             
@@ -60,13 +60,13 @@ if __name__ == '__main__':
     sourcefilename = options.sourcefilename
     left, __, right = sourcefilename.rpartition('.')
     
-    print "Reading in source file..."
+    print("Reading in source file...")
     with open(sourcefilename, 'U') as sourcefile:
         reader = csv.reader(sourcefile, dialect='excel-tab')    
         sourcelist = [line for line in reader]
         sourceheaders = [line[0] for line in sourcelist]
     
-    print "Opening and parsing..."    
+    print("Opening and parsing..."    )
     outputfilename = left +'.reordered.' + right        
     with open(inputfilename, 'U') as inputfile, open(outputfilename, 'w') as outfile:
         reader = csv.reader(inputfile, dialect='excel-tab')    
@@ -78,6 +78,6 @@ if __name__ == '__main__':
                 del sourcelist[sourceheaders.index(header)]
                 sourceheaders.remove(header)
             else:
-                print "A heading was not found in the source file: " + header + ".  Exiting..."
+                print("A heading was not found in the source file: " + header + ".  Exiting...")
                 exit(-1) 
-    print "Done!"
+    print("Done!")

@@ -41,7 +41,7 @@ def add_annot(records, notfoundfile):
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "add_annotations_to_fasta.py -i in.fasta -a \
@@ -60,7 +60,7 @@ text file, first line headings, followed by entries for each sequence")
     mandatories = ["inputfilename", "annotationfilename", "outputfilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
             
@@ -70,7 +70,7 @@ text file, first line headings, followed by entries for each sequence")
     outputfilenameprefix, dummy, extension = outputfilename.rpartition('.')
     notfoundfilename = outputfilenameprefix + '.notfound.txt' 
     
-    print "Reading annotations..."
+    print("Reading annotations...")
     with open(annotationfilename) as annotationfile:
         #build a list of annotation dictionaries
         all_annotations = {}
@@ -81,7 +81,7 @@ text file, first line headings, followed by entries for each sequence")
             value = linelist[1:]
             all_annotations[key] = value
 
-    print "reading sequence files and adding annotations..."
+    print("reading sequence files and adding annotations...")
     
     with open(inputfilename, 'U') as inputfile, open(outputfilename, 'w') as outputfile, \
 open(notfoundfilename, 'w') as notfoundfile:
@@ -89,4 +89,4 @@ open(notfoundfilename, 'w') as notfoundfile:
                  
         SeqIO.write(add_annot(input_seq_iterator, notfoundfile), outputfile, "fasta")
     
-    print "Done!"
+    print("Done!")

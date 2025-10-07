@@ -41,7 +41,7 @@ def process_and_generate(input_iterator, threshold, greaterflag):
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "filter_fasta_by_len.py -i sequence.fasta -g filter_greater_than -l filter_less_than",
@@ -62,7 +62,7 @@ this size")
     mandatories = ["inputfilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
 
@@ -75,24 +75,24 @@ this size")
     elif right in fastq:
         ext = "fastq"
 
-    print "Processing read file: " + inputfilename        
+    print("Processing read file: " + inputfilename        )
     
     with open(inputfilename,'U') as infile:    
         parse_iterator = SeqIO.parse(infile, ext)
         if options.greaterthan == None and options.lessthan == None:
-            print "\nError: Missing Comparison Value\n"
+            print("\nError: Missing Comparison Value\n")
             parser.print_help()
             exit(-1)
         elif options.greaterthan == None and options.lessthan != None:
             lessthan = options.lessthan
-            print "and filtering out sequences less than ", lessthan
+            print("and filtering out sequences less than ", lessthan)
             outputfilename = left + '.filtered.lessthan.' + str(lessthan) + "." + right
             with open(outputfilename, 'w') as outfile:
                 record_generator = process_and_generate(parse_iterator, lessthan, False)
                 SeqIO.write(record_generator, outfile, ext)     
         elif options.greaterthan != None and options.lessthan == None:
             greaterthan = options.greaterthan
-            print "and filtering out sequences greater than ", greaterthan
+            print("and filtering out sequences greater than ", greaterthan)
             outputfilename = left + '.filtered.greaterthan.' + str(greaterthan) + "." + right
             with open(outputfilename, 'w') as outfile:
                 record_generator = process_and_generate(parse_iterator, greaterthan, True)
@@ -100,7 +100,7 @@ this size")
         elif options.greaterthan != None and options.lessthan != None: 
             greaterthan = options.greaterthan
             lessthan = options.lessthan
-            print "and filtering out sequences less than ", lessthan, " and greater than ", greaterthan
+            print("and filtering out sequences less than ", lessthan, " and greater than ", greaterthan)
             outputfilename = left + '.filtered.greaterthan.' + str(greaterthan) + ".filtered.lessthan." + str(lessthan) + '.' + right
             with open(outputfilename, 'w') as outfile:
                 pre_record_generator = process_and_generate(parse_iterator, greaterthan, True)
@@ -108,4 +108,4 @@ this size")
                 SeqIO.write(record_generator, outfile, ext)     
 
 
-    print "Done!"
+    print("Done!")

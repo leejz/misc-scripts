@@ -28,7 +28,7 @@ import csv
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "consensus_taxonomy.py -i in.file -o out.file",
@@ -46,7 +46,7 @@ if __name__ == '__main__':
     mandatories = ["inputfilename", "outputfilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
             
@@ -80,4 +80,4 @@ if __name__ == '__main__':
                 topannot = valuecounts.index[1]
             topannotfreq = float(topannotcount) / len(singlebinpd.index)
             outputfile.write(str(bin) + '\t' + str(topannot) + '\t' + str(round(topannotfreq,2)) + '\n')
-    print "Done!"
+    print("Done!")

@@ -36,7 +36,7 @@ def process_and_generate(input_iterator, threshold, greaterflag):
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "generate_contig_len.py -i sequence.fasta -o \
@@ -54,17 +54,17 @@ contig.lengths.txt",
     mandatories = ["inputfilename", "outputfilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
 
     inputfilename = options.inputfilename
     outputfilename = options.outputfilename  
     
-    print "Processing fasta file...\n"            
+    print("Processing fasta file...\n"            )
     with open(inputfilename,'U') as infile, open(outputfilename, 'w') as outfile:
         parse_iterator = SeqIO.parse(infile, "fasta")
         for seqrec in parse_iterator:
             outfile.write(str(seqrec.id) + '\t' + str(len(seqrec.seq)) + '\n')                
 
-    print "Done!"
+    print("Done!")

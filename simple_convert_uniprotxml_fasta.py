@@ -60,7 +60,7 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "simple_convert_uniprotxml_fasta.py -i \
@@ -78,7 +78,7 @@ uniprot.xml  -o out.fasta.file",
     mandatories = ["inputfilename", "outputfilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
             
@@ -86,7 +86,7 @@ uniprot.xml  -o out.fasta.file",
     outputfilename = options.outputfilename    
    
     with open(inputfilename,'U') as infile, open(outputfilename, 'w') as outfile:
-        print "Reading xml and writing fasta...." 
+        print("Reading xml and writing fasta...." )
         #skip header (5 lines)
         for _ in xrange(5):
             next(infile)               
@@ -113,10 +113,10 @@ uniprot.xml  -o out.fasta.file",
                         outfile.write(">%s %s n=%s Tax=%s RepID=%s\n" % (entrydict["entry id"], entrydict["protein name"], entrydict["member count"], entrydict["common taxon"], entrydict["UniPn ID"] ))
                         entrydict = {}
                     else:
-                        print "Malformed header! \n" + str(entrydict) + "\n"
+                        print("Malformed header! \n" + str(entrydict) + "\n")
             
 
             else:
                 outfile.write(line)
                 
-    print "Done!"
+    print("Done!")

@@ -35,7 +35,7 @@ import csv
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "flatten_cluster_list.py -i clusterlist.tab \
@@ -58,7 +58,7 @@ if __name__ == '__main__':
     mandatories = ["clusterfilename", "filterfilename", "outputfilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
             
@@ -66,11 +66,11 @@ if __name__ == '__main__':
     filterfilename = options.filterfilename
     outputfilename = options.outputfilename
     
-    print "Read in filter file..."
+    print("Read in filter file...")
     with open(filterfilename, 'U') as filterfile:
         filterlines = [filterline.strip() for filterline in filterfile]
             
-    print "Matching records and flattening..."
+    print("Matching records and flattening...")
     #read in coverage file, the most complete record
     with open(clusterfilename, 'U') as clusterfile:
         reader = csv.reader(clusterfile, dialect='excel-tab')
@@ -84,7 +84,7 @@ if __name__ == '__main__':
     readnum_list.sort()
 
     if options.pairedindex:
-        print "Paired read mode detected, combining forward and reverse read lists\n"
+        print("Paired read mode detected, combining forward and reverse read lists\n")
         forward_list = [linenum for linenum in readnum_list if linenum <= pairedindex]
         reverse_list = [linenum - pairedindex for linenum in readnum_list if linenum < pairedindex]
         pairednum_list = forward_list + reverse_list
@@ -92,9 +92,9 @@ if __name__ == '__main__':
         pairednum_list.sort()
         readnum_list = pairednum_list
         
-    print "Writing " + outputfilename
+    print("Writing " + outputfilename)
     with open(outputfilename, 'w') as outputfile:
         for readnum in readnum_list:
             outputfile.write(str(readnum)+"\n")
         
-    print "Done!"
+    print("Done!")

@@ -45,7 +45,7 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "remap_alignment.py -m ecoli.mapping -i chimera.window.txt",
@@ -60,7 +60,7 @@ if __name__ == '__main__':
     mandatories = ["mappingfilename", "infilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
 mappingfilename= options.mappingfilename
@@ -83,4 +83,4 @@ with open(infilename,'U') as infile, open(outfilename,'w') as outfile:
         outline=str(remapval)+'\n'
         outfile.write(outline)
 
-print "Done!"
+print("Done!")

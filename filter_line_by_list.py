@@ -36,7 +36,7 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "filter_line_by_linenum.py -i input.tab -f \
@@ -54,7 +54,7 @@ filter.txt",
     mandatories = ["inputfilename", "filterfilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
             
@@ -62,14 +62,14 @@ filter.txt",
     filterfilename = options.filterfilename
     left, __, right = inputfilename.rpartition('.')
     
-    print "Reading in filter file..."
+    print("Reading in filter file...")
     with open(filterfilename, 'U') as filterfile:
         filterlist = [line.strip() for line in filterfile]
     
     with open(inputfilename, 'U')as inputfile:                    
-        print "Opening and parsing..."
+        print("Opening and parsing...")
         if options.reverseflag:        
-            print "Exclusion filtering enabled.  Saving lines not in " + filterfilename 
+            print("Exclusion filtering enabled.  Saving lines not in " + filterfilename )
             outputfilename = left +'.exclusion.filtered.' + right        
             with open(outputfilename, 'w') as outfile:
                 reader = csv.reader(inputfile, dialect='excel-tab')
@@ -86,4 +86,4 @@ filter.txt",
                     if line[0] in filterlist:
                         writer.writerow(line)
             
-    print "Done!"
+    print("Done!")

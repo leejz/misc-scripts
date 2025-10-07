@@ -30,7 +30,7 @@ from string import strip
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 #Header - Linkers, Libs, Constants
 from string import strip
@@ -43,7 +43,7 @@ import csv
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "make_aligment_mapper.py -a alignment.fasta",
@@ -56,7 +56,7 @@ if __name__ == '__main__':
     mandatories = ["alignmentfilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
             
@@ -75,4 +75,4 @@ with open(alignmentfilename,'U') as alignmentfile, open(outfilename,'w') as outf
         outline=str(columncount)+'\t'+str(ecoli)+'\n'
         outfile.write(outline)
 
-print "Done!"
+print("Done!")

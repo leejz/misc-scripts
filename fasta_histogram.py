@@ -32,7 +32,7 @@ import pylab as P
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "fasta_histogram.py -i in.file -b bin size -o out.file. now with FASTQ",
@@ -49,11 +49,11 @@ if __name__ == '__main__':
     mandatories = ["inputfilename", "binsize", "outputfilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
     if options.binsize <= 0:
-        print "\nError: invalid bin size\n"
+        print("\nError: invalid bin size\n")
         parser.print_help()
         exit(-1)
               
@@ -69,7 +69,7 @@ if __name__ == '__main__':
     elif inputfilename.split('.')[-1] in fastq:
         filetype = 'fastq'
     else: 
-        print "Unknown file type: " + inputfilename.split('.')[-1] + ". Allowed: " + str(fastq + fasta) 
+        print("Unknown file type: " + inputfilename.split('.')[-1] + ". Allowed: " + str(fastq + fasta) )
         parser.print_help()
         exit(-1)
    
@@ -89,12 +89,12 @@ if __name__ == '__main__':
                 
     N50 = fasta_lengths.index(L50)
     
-    print "N50 = ", N50, ", L50 = ", L50
+    print("N50 = ", N50, ", L50 = ", L50)
     
-    print "Writing file ", outputfilename
+    print("Writing file ", outputfilename)
     with open(outputfilename, 'w') as outfile:
         outfile.write('bin\tlength count\n')
         for bincount, binno in zip(n,bins):
             outfile.write(str(binno)+'\t'+str(bincount)+'\n')
     
-    print "Done!"
+    print("Done!")

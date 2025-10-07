@@ -30,7 +30,7 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "tax_rank_comparison.py -t classified.taxonomy -T reference.taxonomy",
@@ -47,7 +47,7 @@ if __name__ == '__main__':
     mandatories = ["reftaxname", "classtaxname"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
     
@@ -80,7 +80,7 @@ if __name__ == '__main__':
             # error if rank is greater than the match list size
             if minlen >= len(match_rank_list):
                 #unmatched += 1
-                print 'foo'
+                print('foo')
             else:
                 for taxrank in range(minlen):
                     if (reflist[taxrank] == classlist[taxrank]) and (reflist[taxrank] != 'unclassified'):
@@ -98,22 +98,22 @@ if __name__ == '__main__':
     classfile.close()
     
     #Output data
-    print 'reference taxonomy:\t\t'+reffilename
-    print 'classification taxonomy:\t'+classfilename
-    print 'Matches found at each taxonomic rank'
-    print '------------------------------------'
-    print 'Taxonomic Rank:\t'+'\t '.join(map(str,range(len(match_rank_list))))
-    print '\t\t'+'\t '.join(map(str,match_rank_list))
-    print 'Total entries:\t'+str(count)+'\n\n'
-    print 'Taxonomic ranks in reference taxonomy'
-    print '------------------------------------'
-    print 'Taxonomic Rank:\t'+'\t '.join(map(str,range(len(ref_rank_list))))
-    print '\t\t'+'\t '.join(map(str,ref_rank_list))
-    print 'Total entries:\t'+str(count)+'\n\n'
-    print 'Taxonomic ranks in classified taxonomy'
-    print '------------------------------------'
-    print 'Taxonomic Rank:\t'+'\t '.join(map(str,range(len(class_rank_list))))
-    print '\t\t'+'\t'.join(map(str,class_rank_list))
-    print 'Total entries:\t '+str(count)+'\n\n'
-    print 'unmatched:\t'+str(unmatched)
-print "Done!"
+    print('reference taxonomy:\t\t'+reffilename)
+    print('classification taxonomy:\t'+classfilename)
+    print('Matches found at each taxonomic rank')
+    print('------------------------------------')
+    print('Taxonomic Rank:\t'+'\t '.join(map(str,range(len(match_rank_list)))))
+    print('\t\t'+'\t '.join(map(str,match_rank_list)))
+    print('Total entries:\t'+str(count)+'\n\n')
+    print('Taxonomic ranks in reference taxonomy')
+    print('------------------------------------')
+    print('Taxonomic Rank:\t'+'\t '.join(map(str,range(len(ref_rank_list)))))
+    print('\t\t'+'\t '.join(map(str,ref_rank_list)))
+    print('Total entries:\t'+str(count)+'\n\n')
+    print('Taxonomic ranks in classified taxonomy')
+    print('------------------------------------')
+    print('Taxonomic Rank:\t'+'\t '.join(map(str,range(len(class_rank_list)))))
+    print('\t\t'+'\t'.join(map(str,class_rank_list)))
+    print('Total entries:\t '+str(count)+'\n\n')
+    print('unmatched:\t'+str(unmatched))
+print("Done!")

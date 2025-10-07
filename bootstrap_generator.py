@@ -33,7 +33,7 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "bootstrap_generator.py -i qiime_otu_table.\
@@ -53,7 +53,7 @@ txt -o output_directory -b 100",
     mandatories = ["infilename", "numbootstraps", "outdirname"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
 
@@ -75,7 +75,7 @@ txt -o output_directory -b 100",
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
     else:
-        print "\nError: Output directory already exists\n"
+        print("\nError: Output directory already exists\n")
         parser.print_help()
         exit(-1)
     
@@ -86,6 +86,6 @@ txt -o output_directory -b 100",
             outfile.write(secondline)
             for replacement in range(len(all_lines)):
                 outfile.write(random.choice(all_lines))
-        print 'Output file '+bs_outfilename+' written.'
+        print('Output file '+bs_outfilename+' written.')
     
-print "Done!"
+print("Done!")

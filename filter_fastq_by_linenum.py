@@ -53,17 +53,17 @@ def process_and_generate(input_iterator, filterfile, filterflag):
             if count+1 == linenum_next:
                 linenum_next = int(filterfile.next().strip())
             else:
-                #print count+1
+                #print(count+1)
                 yield rec
         else:
             if count+1 == linenum_next:
                 linenum_next = int(filterfile.next().strip())
-                #print count+1
+                #print(count+1)
                 yield rec
                 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "filter_fastq_by_linenum.py -i input.fastq -f filter.txt",
@@ -83,7 +83,7 @@ if __name__ == '__main__':
     mandatories = ["inputfilename", "filterfilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
             
@@ -96,9 +96,9 @@ if __name__ == '__main__':
         linenum_next = int(filterfile.next().strip())
 
                     
-    print "Opening and parsing..."
+    print("Opening and parsing...")
     if options.reverseflag:        
-        print "Exclusion filtering enabled.  Saving sequences not in " + filterfilename 
+        print("Exclusion filtering enabled.  Saving sequences not in " + filterfilename )
         outputfilename = left +'.exclusion.filtered.' + right
     with open(outputfilename, 'w') as outfile, open(inputfilename, 'U') as inputfile:
         parse_iterator = SeqIO.parse(inputfile, "fastq")
@@ -108,10 +108,10 @@ if __name__ == '__main__':
     #SeqIO.write([fastq_record for fastqcount, fastq_record in enumerate(SeqIO.parse(inputfile, "fastq")) if fastqcount+1 in linenums], outfile, "fastq")     
     #for fastqcount, fastq_record in enumerate(SeqIO.parse(inputfile, "fastq")):
     #    if fastqcount+1 in linenums:
-            #print "seq " + str(fastqcount)
+            #print("seq " + str(fastqcount))
     #        linenums.remove(fastqcount)
     #        SeqIO.write(fastq_record, outfile, "fastq") 
     #outfile.close()
     #filterfile.close()
 	
-    print "Done!"
+    print("Done!")

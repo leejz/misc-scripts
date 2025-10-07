@@ -28,7 +28,7 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------
 """Body"""
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "get_header_from_fastq.py -i sequence.fastq",
@@ -41,14 +41,14 @@ if __name__ == '__main__':
     mandatories = ["inputfilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
 
     inputfilename = options.inputfilename
     outputfilename = inputfilename.rpartition('.')[0] + '.headers.dbm'
    
-    print "Processing fastq read file...\n"    
+    print("Processing fastq read file...\n"    )
  
     fastqinfile = open(inputfilename,'U')   
     header_db = shelve.open(outputfilename)
@@ -58,4 +58,4 @@ if __name__ == '__main__':
     fastqinfile.close()
     header_db.close()
 
-    print "Done!"
+    print("Done!")

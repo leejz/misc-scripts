@@ -31,7 +31,7 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 
 if __name__ == '__main__':
@@ -52,7 +52,7 @@ input.fasta -g input.list.txt -o output.fasta",
     mandatories = ["inputfilename", "outfilename", "gi_list"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
     
@@ -82,9 +82,9 @@ input.fasta -g input.list.txt -o output.fasta",
             outfile.write(line)
             pullnextflag = False
 
-    print "Files written.  The following gi's not found:\n"
-    print [ginames+"\n" for ginames in gilist]
+    print("Files written.  The following gi's not found:\n")
+    print([ginames+"\n" for ginames in gilist])
     infile.close()
     outfile.close()
 
-    print "Done!"
+    print("Done!")

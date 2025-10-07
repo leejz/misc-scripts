@@ -14,7 +14,7 @@ handle = open("temp.fastq", "w") #w=write
 records = PairedFastaQualIterator(open("example.fasta"), open("example.qual"))
 count = SeqIO.write(records, handle, "fastq")
 handle.close()
-print "Converted %i records" % count
+print("Converted %i records" % count)
 
 --------------------------------------------------------------------------------
 usage:   fasta_to_fastq.py -i input.fasta -q qual.txt -o output.fastq
@@ -32,7 +32,7 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
     
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "fasta_to_fastq.py -i input.fasta -q qual.txt\
@@ -50,18 +50,18 @@ if __name__ == '__main__':
     mandatories = ["fastaname", "qualname", "outputfastqname"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
     fastaname = options.fastaname            
     qualname = options.qualname        
     outputfastqname = options.outputfastqname
 
-print "Parsing: " + outputfastqname
+print("Parsing: " + outputfastqname)
 
 with open(outputfastqname, 'w') as handle, open(fastaname, 'U') as fastafile, open(qualname, 'U') as qualfile:
     records = PairedFastaQualIterator(fastafile, qualfile)
     count = SeqIO.write(records, handle, "fastq")
-    print "Converted %i records" % count
+    print("Converted %i records" % count)
     
-print "Done!"
+print("Done!")

@@ -28,7 +28,7 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "python fix_refseq_faa.py -i input.fasta -o \
@@ -46,7 +46,7 @@ outfilename.fasta",
     mandatories = ["inputfilename", "outfilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
     
@@ -64,6 +64,6 @@ outfilename.fasta",
                 outfile.write(outline)
             elif line.strip().isupper():
                 outfile.write(line.strip())
-    print str(linenum)+" lines written"
+    print(str(linenum)+" lines written")
 
-    print "Done!"
+    print("Done!")

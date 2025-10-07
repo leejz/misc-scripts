@@ -30,7 +30,7 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "replace_from_file.py -i in.file -f filter.txt -o out.file",
@@ -50,7 +50,7 @@ if __name__ == '__main__':
     mandatories = ["inputfilename", "filterfilename", "outputfilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
             
@@ -68,7 +68,7 @@ if __name__ == '__main__':
             filterfile_text.append([query, replace])
     
     with open(inputfilename,'U') as infile, open(outputfilename, 'w') as outfile, open(notfoundfilename, 'w') as notfoundfile:
-        print "Replacing...."        
+        print("Replacing...."        )
         for line in infile:
             new_file_text = ''
             #only search if header
@@ -88,4 +88,4 @@ if __name__ == '__main__':
             #    new_file_text = line
             outfile.write(new_file_text)
 
-    print "Done!"
+    print("Done!")

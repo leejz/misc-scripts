@@ -39,7 +39,7 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "python -n names.txt -t classified.taxonomy.txt",
@@ -54,7 +54,7 @@ if __name__ == '__main__':
     mandatories = ["namefilename", "taxfilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)    
     # read in command line args and parse file
@@ -72,7 +72,7 @@ if __name__ == '__main__':
             if taxname not in remove_names:
                  outfile.write(line)
 
-        print 'Output file '+outfilename+' written.'
+        print('Output file '+outfilename+' written.')
 
     
-print "Done!"
+print("Done!")

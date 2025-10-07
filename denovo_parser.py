@@ -36,7 +36,7 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "denovo_parser.py -i input_file.fasta -n \
@@ -53,14 +53,14 @@ input_otu_table.txt",
     mandatories = ["inputfilename", "inputotuname"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
             
     fastafilename = options.inputfilename
     otufilename = options.inputotuname
     outfilename = fastafilename.split('.fasta')[0]+'.denovo_uchime.fasta'
-    print "Otu table processing..."
+    print("Otu table processing...")
     otuinfile = open(otufilename,'U')
 
     #junk the first 2 rows
@@ -85,7 +85,7 @@ input_otu_table.txt",
     for otuname, rel_abund in zip(otunames,rel_abundances):
         abund_dict[otuname]=rel_abund
 
-    print "Fasta file processing..."
+    print("Fasta file processing...")
     fastainfile=open(fastafilename,'U')
     outfile=open(outfilename,'w')
 
@@ -99,4 +99,4 @@ input_otu_table.txt",
     fastainfile.close()
     outfile.close()
 
-    print "Done!"
+    print("Done!")

@@ -39,7 +39,7 @@ def writeline_fastq(record, file):
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "label_interleaved_fastq.py -i sequence.fastq",
@@ -52,7 +52,7 @@ if __name__ == '__main__':
     mandatories = ["inputfilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
 
@@ -64,7 +64,7 @@ if __name__ == '__main__':
     
     parse_iterator = SeqIO.parse(infile, "fastq")
         
-    print "Processing fasta read file...\n"        
+    print("Processing fasta read file...\n"        )
     
     with open(inputfilename, 'U') as inputfile, open(outputfilename1, 'w') as out1, open(outputfilename2, 'w') as out2:
         oldrec = []
@@ -82,4 +82,4 @@ if __name__ == '__main__':
             old_mate = cur_mate[:]
             old_name = cur_name[:]
                 
-    print "Done!"
+    print("Done!")

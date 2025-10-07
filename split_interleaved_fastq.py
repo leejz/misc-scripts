@@ -37,7 +37,7 @@ def writeline_fastq(record, file):
 
 #-------------------------------------------------------------------------------
 """Body"""
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "split_interleaved_fastq.py -i sequence.fastq",
@@ -54,12 +54,12 @@ if __name__ == '__main__':
     mandatories = ["inputfilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
    
     if options.mate_format not in ('/', ' '):
-        print "\nError: Invalid mate read delimiter"
+        print("\nError: Invalid mate read delimiter")
         parser.print_help()
         exit(-1)
     else:
@@ -73,7 +73,7 @@ if __name__ == '__main__':
     
     parse_iterator = SeqIO.parse(infile, "fastq")
         
-    print "Processing fastq read file...\n"        
+    print("Processing fastq read file...\n"        )
     
     with open(inputfilename, 'U') as inputfile, open(outputfilename1, 'w') as out1, open(outputfilename2, 'w') as out2:
         for record in parse_iterator:
@@ -85,4 +85,4 @@ if __name__ == '__main__':
                 out1.write(record.format("fastq"))
                 out2.write(next_rec.format("fastq"))
     
-    print "Done!"
+    print("Done!")

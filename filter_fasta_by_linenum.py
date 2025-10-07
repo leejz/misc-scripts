@@ -38,7 +38,7 @@ from random import shuffle
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "filter_fasta_by_linenum.py -i input.fa -f \
@@ -56,7 +56,7 @@ filter.txt",
     mandatories = ["inputfilename", "filterfilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
             
@@ -65,7 +65,7 @@ filter.txt",
     left, dot, right = fastafilename.rpartition('.')
     outputfilename = left +'.filtered.' + right
     
-    print "Reading files..."
+    print("Reading files...")
     with open(fastafilename,'U') as fastainfile:
         fasta_lines = [line.strip() for line in fastainfile]
     
@@ -86,12 +86,12 @@ filter.txt",
             fasta = fasta + line
         if iter == len(fasta_lines)-1:
             large_fasta.append([header,fasta])
-            print 'last line!'
+            print('last line!')
     
-    print "Writing Fasta file: " + outputfilename
+    print("Writing Fasta file: " + outputfilename)
     with open(outputfilename, 'w') as outfile:    
         for linenum in linenums:
             outfile.write(large_fasta[int(linenum)][0]+'\n')
             outfile.write(large_fasta[int(linenum)][1]+'\n')
 
-    print "Done!"
+    print("Done!")

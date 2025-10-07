@@ -35,7 +35,7 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------
 """Body"""
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "paired_cluster_list.py -i listofreads.txt \
@@ -55,7 +55,7 @@ if __name__ == '__main__':
     mandatories = ["linenumfilename", "pairedindex", "outputfilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
             
@@ -63,11 +63,11 @@ if __name__ == '__main__':
     pairedindex = options.pairedindex
     outputfilename = options.outputfilename
     
-    print "Read in linenum file..."
+    print("Read in linenum file...")
     with open(linenumfilename, 'U') as linenumfile:
         readnum_list = [int(linenum.strip()) for linenum in linenumfile]
             
-    print "Combining forward and reverse read lists..."
+    print("Combining forward and reverse read lists...")
     
     forward_list = [linenum for linenum in readnum_list if linenum <= options.pairedindex]
     reverse_list = [linenum - pairedindex for linenum in readnum_list if linenum > options.pairedindex]
@@ -75,9 +75,9 @@ if __name__ == '__main__':
     pairednum_list = list(set(pairednum_list))
     pairednum_list.sort()	
         
-    print "Writing " + outputfilename
+    print("Writing " + outputfilename)
     with open(outputfilename, 'w') as outputfile:
         for readnum in pairednum_list:
             outputfile.write(str(readnum)+"\n")
         
-    print "Done!"
+    print("Done!")

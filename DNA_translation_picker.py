@@ -38,7 +38,7 @@ def reverseComplement(sequence):
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "DNA_translation_picker.py -i input.fa -o output.faa -t",
@@ -57,13 +57,13 @@ if __name__ == '__main__':
     mandatories = ["inputfilename", "outputfilename", "transnumber"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
     
     transnumber = options.transnumber
     trans_table=translation_tables[transnumber]
-    print "Option " + str(transnumber) + "Selected.  Using " + trans_table[0] + " NCBI translation table 3.9"
+    print("Option " + str(transnumber) + "Selected.  Using " + trans_table[0] + " NCBI translation table 3.9")
     stopcodons=[]
     for key, value in trans_table[1].iteritems():
         if value == "*":
@@ -122,7 +122,7 @@ if __name__ == '__main__':
     outfile.close()
     dumpoutfile.close()
 
-    print "Done!"
+    print("Done!")
 
 """---------------------------------------------------------------------------------------"""
 """    NCBI TRANSLATION TABLE

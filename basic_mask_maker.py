@@ -36,7 +36,7 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "basic_mask_maker.py -i filter.fasta -a A \
@@ -56,7 +56,7 @@ if __name__ == '__main__':
     mandatories = ["inputfilename", "outfilename", "cutoff"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
     
@@ -70,7 +70,7 @@ if __name__ == '__main__':
         cutoffval=cutoffscores.index(cutoff)
         header=infile.next().strip()
         sequence=infile.next().strip()
-        print len(sequence),"bp sequence read"
+        print(len(sequence),"bp sequence read")
         output_sequence=''
         for letter in sequence:
             if letter == '-':
@@ -80,13 +80,13 @@ if __name__ == '__main__':
             elif cutoffval >  cutoffscores.index(letter): 
                 outputletter='0'
             else:
-                print 'no match for letter', letter, 'at position',len(output_sequence)
+                print('no match for letter', letter, 'at position',len(output_sequence))
             output_sequence+=outputletter
 
     with open(outfilename, 'w') as outfile:
         outheader=split('\W+',header)
         outfile.write('#'+outheader[2]+' '+outheader[3]+'\n')
         outfile.write(output_sequence)
-        print len(output_sequence), "bp filter written to", outfilename
+        print(len(output_sequence), "bp filter written to", outfilename)
 
-    print "Done!"
+    print("Done!")

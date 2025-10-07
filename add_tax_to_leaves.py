@@ -50,7 +50,7 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 
 if __name__ == '__main__':
@@ -69,7 +69,7 @@ if __name__ == '__main__':
     mandatories = ["inputfilename", "xmlfilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
     
@@ -113,6 +113,6 @@ if __name__ == '__main__':
         outfile.write(secondline)
     outfile.close()
 
-    print outfilename + " written."
+    print(outfilename + " written.")
 
-    print "Done!"
+    print("Done!")

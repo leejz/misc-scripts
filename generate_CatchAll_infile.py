@@ -87,14 +87,14 @@ def generate_catchall_file(input_dir, filename, output_dir):
         sample_out=sample_histogram.items()
         sample_out.sort() #sorts on first element, the key, or the frequency count
         if sample_out[0][0]==0: #remove the 0,xxx line becuse catchall doesn't use it
-            #print "zero line pruned in ", outfilename
+            #print("zero line pruned in ", outfilename)
             sample_out.pop(0)
         output_path = outfilepath + '/' + outfilename
         with open(output_path,'w') as outfile:
             for pair in sample_out:
                 outfile.write(str(pair[0])+','+str(pair[1])+'\n')
         output_paths.append(output_path)
-        print "writing to file: " + output_path + "\n"
+        print("writing to file: " + output_path + "\n")
     return output_paths
 
 #-------------------------------------------------------------------------------
@@ -105,7 +105,7 @@ import os
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "generate_CatchAll_infile.py -i input_directory",
@@ -122,7 +122,7 @@ if __name__ == '__main__':
     mandatories = ["input_dir", "output_dir"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nERROR: Missing Arguments\n"
+            print("\nERROR: Missing Arguments\n")
             parser.print_help()
             exit(-1)
     
@@ -130,11 +130,11 @@ if __name__ == '__main__':
     input_dir = "./"+options.input_dir
     output_dir = "./"+options.output_dir
     if not os.path.exists(input_dir):
-        print "\nERROR: Input path does not exist\n"
+        print("\nERROR: Input path does not exist\n")
         parser.print_help()
         exit(-1)
     elif os.path.exists(output_dir):
-        print "\nERROR: Output path " + output_dir + " Exists!  Please remove.\n"
+        print("\nERROR: Output path " + output_dir + " Exists!  Please remove.\n")
         parser.print_help()
         exit(-1)
     else:
@@ -145,9 +145,9 @@ if __name__ == '__main__':
             if '.txt' in filename:
                 outfilenames = outfilenames + generate_catchall_file(input_dir, filename, output_dir)
     
-    print "Writing output shell script. \n"
+    print("Writing output shell script. \n")
     with open('CatchAll.sh','w') as shscript:
         for outfilename in outfilenames:
             shscript.write('mono CatchAllCmdL.exe '+outfilename+' '+outfilename.split('.txt')[0]+'\n')
             
-print "Done!"
+print("Done!")

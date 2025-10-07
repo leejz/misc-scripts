@@ -52,7 +52,7 @@ from numpy import average, std
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "python collate_CatchAll_results.py -i \
@@ -69,7 +69,7 @@ input_directory -o output_file",
     mandatories = ["input_dir", "output_file"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nERROR: Missing Arguments\n"
+            print("\nERROR: Missing Arguments\n")
             parser.print_help()
             exit(-1)
     
@@ -78,7 +78,7 @@ input_directory -o output_file",
     outputfilename = options.output_file
     
     if not os.path.exists(input_dir):
-        print "\nERROR: Input path does not exist\n"
+        print("\nERROR: Input path does not exist\n")
         parser.print_help()
         exit(-1)
     else:
@@ -133,7 +133,7 @@ input_directory -o output_file",
                 data_dict[samplename] = [[float(depth), averageETS, SDETS]]
                         
                         
-    print "Writing output.\n"
+    print("Writing output.\n")
     with open(outputfilename,'w') as writerfile:
         writer = csv.writer(writerfile, dialect="excel-tab")
         datalist = data_dict.items()
@@ -146,6 +146,6 @@ input_directory -o output_file",
                 writer.writerow([samplename] + sample_line)
             writer.writerow([])
 
-    print "File: " + outputfilename + " has been written."
+    print("File: " + outputfilename + " has been written.")
     
-    print "Done!"
+    print("Done!")

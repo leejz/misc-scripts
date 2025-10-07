@@ -50,7 +50,7 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------
 #Body
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
 
@@ -72,7 +72,7 @@ picked_otu.txt -o outfile.txt",
     mandatories = ["taxfilename", "otufilename","outfilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nMissing parameter.  Must provide a filename.\n"
+            print("\nMissing parameter.  Must provide a filename.\n")
             parser.print_help()
             exit(-1)
     
@@ -96,11 +96,11 @@ picked_otu.txt -o outfile.txt",
         writer=csv.writer(outfile, dialect='excel-tab')    
         #search and write
         for name_tax_entry in name_tax:
-            print name_tax_entry
+            print(name_tax_entry)
             for otu in otu_list:
                 if name_tax_entry[0] in otu:
                     for otu_member in otu:
                         writer.writerow([otu_member, name_tax_entry[1]])
-        print 'Output file '+outfilename+' written.'
+        print('Output file '+outfilename+' written.')
 
-print "Done!"
+print("Done!")

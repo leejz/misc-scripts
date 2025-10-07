@@ -37,7 +37,7 @@ from matplotlib.ticker import FuncFormatter
 
 #-------------------------------------------------------------------------------
 # setup command line arguments
-print "Running..."
+print("Running...")
 
 if __name__ == '__main__':
     parser = ArgumentParser(usage = "simple_heatmap.py -i input_otutable.txt -o \
@@ -62,7 +62,7 @@ than highlight")
     mandatories = ["inputfilename"]
     for m in mandatories:
         if not options.__dict__[m]:
-            print "\nError: Missing Arguments\n"
+            print("\nError: Missing Arguments\n")
             parser.print_help()
             exit(-1)
     
@@ -122,7 +122,7 @@ than highlight")
             rel_data.append(log10(cutoff_rel_data_row))
     
     # box plot these scores
-    print "Plotting..."
+    print("Plotting...")
 
     """# a blue-black with red highlights
     cdict = {'red': ((0.0, 1.0, 1.0),
@@ -181,9 +181,9 @@ than highlight")
     im.axes.xaxis.set_ticks(xticks)
     im.axes.xaxis.set_ticklabels(sample_meta, rotation=90)
     if not (outputfilename == None):
-        print 'Saving ' + outputfilename
+        print('Saving ' + outputfilename)
         plt.savefig(outputfilename, format='pdf',dpi=300, transparent=True)
     plt.show()
     
     
-    print "Done!"
+    print("Done!")

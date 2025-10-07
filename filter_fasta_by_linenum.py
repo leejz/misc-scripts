@@ -29,7 +29,7 @@ usage:   filter_fasta_by_linenum.py -i input.fa -f filter.txt
 
 #-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
-from string import strip
+
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 from random import shuffle
 

@@ -24,7 +24,6 @@ usage:   DNA_translation_picker.py -i input.fa -o output.faa -t
 
 #-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
-from string import strip, maketrans
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 complement = maketrans('ATCGN', 'TAGCN') 

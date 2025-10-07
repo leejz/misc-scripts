@@ -41,7 +41,7 @@ usage:    python add_tax_to_leaves.py -i input.fasta -x phylo.xml -n
 """
 #-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
-from string import strip
+
 from re import split
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 

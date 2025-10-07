@@ -44,7 +44,7 @@ usage:    python collate_CatchAll_results.py -i input_directory -o output_file
 #-------------------------------------------------------------------------------
 #Functions & Declarations
 
-from string import strip
+
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 import os
 import csv

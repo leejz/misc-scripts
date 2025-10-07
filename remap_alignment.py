@@ -37,7 +37,7 @@ usage:   remap_alignment.py -m ecoli.mapping -i chimera.window.txt
 #-------------------------------------------------------------------------------
 
 #Header - Linkers, Libs, Constants
-from string import strip
+
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------

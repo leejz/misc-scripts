@@ -27,7 +27,7 @@ usage:   paired_cluster_list.py -i listofreads.txt -p lastline.interger -o outpu
 
 #-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
-from string import strip
+
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------

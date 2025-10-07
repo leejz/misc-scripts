@@ -26,7 +26,7 @@ usage:   reorder_file_from_list.py -i input.tab -f filter.txt
 
 #-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
-from string import strip
+
 import csv
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 

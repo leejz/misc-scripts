@@ -30,7 +30,7 @@ usage:   filter_fasta_by_header.py -i input.fa -f filter.txt -n flipflag
 
 #-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
-from string import strip
+
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------

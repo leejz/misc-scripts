@@ -52,7 +52,7 @@ usage:   simple_convert_uniprotxml_fasta.py -i uniprot.xml  -o out.fasta.file
 
 #-------------------------------------------------------------------------------   
 #Header - Linkers, Libs, Constants
-from string import strip
+
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------

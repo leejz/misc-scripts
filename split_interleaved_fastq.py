@@ -21,7 +21,7 @@ usage:   split_interleaved_fastq.py -i sequence.fastq
 
 #-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
-from string import strip
+
 from Bio import SeqIO
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 

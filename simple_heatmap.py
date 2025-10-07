@@ -26,7 +26,7 @@ python simple_heatmap.py -i input_otutable.txt -o output_file.pdf -n cutoff_int 
 #-------------------------------------------------------------------------------
 """Functions & Declarations"""
 
-from string import strip
+
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 import csv
 from numpy import divide,log10,arange

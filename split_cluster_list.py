@@ -25,7 +25,7 @@ usage:   split_cluster_list.py -i clusterlist.tab -f number1,number2,number3 -m 
 
 #-------------------------------------------------------------------------------      
 #Header - Linkers, Libs, Constants
-from string import strip
+
 from bisect import bisect_left
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 import csv

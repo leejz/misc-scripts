@@ -99,7 +99,7 @@ def generate_catchall_file(input_dir, filename, output_dir):
 
 #-------------------------------------------------------------------------------
 #Header - linkers, libs, constants
-from string import strip
+
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 import os
 

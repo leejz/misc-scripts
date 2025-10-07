@@ -25,7 +25,7 @@ usage:  tax_rank_comparison.py -t classified.taxonomy -T reference.taxonomy
 #-------------------------------------------------------------------------------
 #Functions & Declarations
     
-from string import strip
+
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------

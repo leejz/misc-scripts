@@ -18,7 +18,7 @@ usage:    consensus_taxonomy.py -i in.file -o out.file
 
 #-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
-from string import strip
+
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 import pandas as pd
 import csv

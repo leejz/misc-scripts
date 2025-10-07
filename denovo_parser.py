@@ -28,7 +28,7 @@ denovo_parser.py -i input_file.fasta -n input_otu_table.txt
 
 #-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
-from string import strip
+
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------

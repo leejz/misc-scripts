@@ -26,7 +26,7 @@ NOTE: This is a basic mask maker script.  No error checking is done!
 
 #-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
-from string import strip
+
 from sys import argv
 from re import split
 from argparse import ArgumentParser, RawDescriptionHelpFormatter

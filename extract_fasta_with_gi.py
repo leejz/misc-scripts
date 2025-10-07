@@ -22,7 +22,7 @@ usage:    extract_fasta_with_gi.py -i input.fasta -g input.list.txt -o output.fa
 """
 #-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
-from string import strip
+
 from re import split
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 

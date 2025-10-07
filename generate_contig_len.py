@@ -12,7 +12,7 @@ usage:   generate_contig_len.py -i sequence.fasta -o contig.lengths.txt
 
 #-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
-from string import strip
+
 from Bio import SeqIO
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 

@@ -19,7 +19,7 @@ usage:    python fix_refseq_faa.py -i input.fasta -o outfilename.fasta
 """
 #-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
-from string import strip
+
 from re import split
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 

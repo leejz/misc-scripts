@@ -16,7 +16,7 @@ usage:   get_header_from_fastq.py -i sequence.fastq
 
 #-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
-from string import strip
+
 import sys
 #sys.path.insert(0, '~/bin/')
 from Bio import SeqIO

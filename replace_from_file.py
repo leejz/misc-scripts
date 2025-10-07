@@ -22,7 +22,7 @@ usage:   replace_from_file.py -i in.file -f filter.txt -o out.file
 
 #-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
-from string import strip
+
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------

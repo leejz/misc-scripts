@@ -17,7 +17,7 @@ usage:   filter_fasta_by_len.py -i sequence.fasta -g filter_greater_than -l filt
 
 #-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
-from string import strip
+
 from Bio import SeqIO
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 

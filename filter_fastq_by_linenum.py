@@ -30,7 +30,7 @@ usage:   filter_fastq_by_linenum.py -i input.fastq -f filter.txt
 
 #-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
-from string import strip
+
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 import sys
 #sys.path.insert(0, '~/bin/')

@@ -26,7 +26,7 @@ usage:   flatten_cluster_list.py -i clusterlist.tab -f filterlist.txt -o outputf
 
 #-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
-from string import strip
+
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 import csv
 

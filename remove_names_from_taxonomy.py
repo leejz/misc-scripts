@@ -31,7 +31,7 @@ usage:    python -n names.txt -t classified.taxonomy
 #-------------------------------------------------------------------------------
 
 #Header - Linkers, Libs, Constants
-from string import strip
+
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 #-------------------------------------------------------------------------------

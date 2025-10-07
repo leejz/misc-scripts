@@ -26,14 +26,14 @@ usage: make_alignment_mapper.py -a alignment.fasta
 
 #-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
-from string import strip
+
 
 #-------------------------------------------------------------------------------
 #Body
 print("Running...")
 
 #Header - Linkers, Libs, Constants
-from string import strip
+
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 import csv
 #import pandas as pd

@@ -20,7 +20,7 @@ usage:   randomize_fasta.py -i input.fa -o output_fasta
 
 #-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
-from string import strip
+
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 from random import shuffle
 

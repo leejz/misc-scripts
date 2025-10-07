@@ -21,7 +21,7 @@ usage:   mark_duplicates.py -i fa.file -o out.txt
 
 #-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
-from string import strip
+
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 import csv
 import numpy as np	

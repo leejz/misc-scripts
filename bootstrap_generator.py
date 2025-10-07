@@ -26,7 +26,7 @@ usage:   bootstrap_generator.py -i qiime_otu_table.txt -o output_dir -b 100
 #-------------------------------------------------------------------------------
 #Functions & Declarations
     
-from string import strip
+
 import os as os
 import random as random
 from argparse import ArgumentParser, RawDescriptionHelpFormatter

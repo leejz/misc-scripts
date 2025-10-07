@@ -21,7 +21,7 @@ usage:   fasta_histogram.py -i in.file -b bin size -o out.file
 
 #-------------------------------------------------------------------------------
 #Header - Linkers, Libs, Constants
-from string import strip
+
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 from Bio import SeqIO
 import numpy as np
